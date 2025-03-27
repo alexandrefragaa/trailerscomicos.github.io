@@ -6,11 +6,11 @@ const allSeriesDatabase = {
       description: "Continuação da série do Demolidor com Charlie Cox",
       streaming: "Disney+",
       episodes: [
-        { date: "04/03/2023", type: "Estreia" },
-        { date: "11/03/2023", type: "Novo" },
-        { date: "18/03/2023", type: "Final" }
+        { date: "04/03/2025", type: "Estreia" },
+        { date: "11/03/2025", type: "Novo" },
+        { date: "18/03/2025", type: "Final" }
       ],
-      activeUntil: "18/04/2023"
+      activeUntil: "18/04/2025"
     },
     {
       title: "Coração de Ferro",
@@ -18,11 +18,11 @@ const allSeriesDatabase = {
       description: "A jornada de Riri Williams como nova heroína tecnológica",
       streaming: "Disney+",
       episodes: [
-        { date: "24/06/2023", type: "Estreia" },
-        { date: "01/07/2023", type: "Novo" },
-        { date: "08/07/2023", type: "Final" }
+        { date: "24/06/2025", type: "Estreia" },
+        { date: "01/07/2025", type: "Novo" },
+        { date: "08/07/2025", type: "Final" }
       ],
-      activeUntil: "08/08/2023"
+      activeUntil: "08/08/2025"
     },
     {
       title: "Olhos de Wakanda",
@@ -30,10 +30,43 @@ const allSeriesDatabase = {
       description: "Aventuras do super-herói wakandano",
       streaming: "Disney+",
       episodes: [
-        { date: "01/08/2023", type: "Estreia" },
-        { date: "08/08/2023", type: "Novo" }
+        { date: "01/08/2025", type: "Estreia" },
+        { date: "08/08/2025", type: "Novo" }
       ],
-      activeUntil: "08/09/2023"
+      activeUntil: "08/09/2025"
+    },
+    {
+      title: "Marvel Zombies",
+      imageUrl: "img/marvel-zombies.jpg",
+      description: "Universo alternativo zumbi do MCU",
+      streaming: "Disney+",
+      episodes: [
+        { date: "03/10/2025", type: "Estreia" },
+        { date: "10/10/2025", type: "Final" }
+      ],
+      activeUntil: "10/11/2025"
+    },
+    {
+      title: "Wonder Man",
+      imageUrl: "img/WONDERMAN.jpg",
+      description: "As aventuras do herói cinematográfico Simon Williams",
+      streaming: "Disney+",
+      episodes: [
+        { date: "01/12/2025", type: "Estreia" },
+        { date: "08/12/2025", type: "Novo" }
+      ],
+      activeUntil: "08/01/2026"
+    },
+    {
+      title: "Visão",
+      imageUrl: "img/visao.jpg",
+      description: "Jornada do androide após WandaVision",
+      streaming: "Disney+",
+      episodes: [
+        { date: "01/01/2026", type: "Estreia" },
+        { date: "08/01/2026", type: "Novo" }
+      ],
+      activeUntil: "08/02/2026"
     }
   ],
   dc: [
@@ -43,10 +76,54 @@ const allSeriesDatabase = {
       description: "As novas missões do anti-herói interpretado por John Cena",
       streaming: "Max",
       episodes: [
-        { date: "01/08/2023", type: "Estreia" },
-        { date: "08/08/2023", type: "Novo" }
+        { date: "01/08/2025", type: "Estreia" },
+        { date: "08/08/2025", type: "Novo" }
       ],
-      activeUntil: "08/09/2023"
+      activeUntil: "08/09/2025"
+    },
+    {
+      title: "Supergirl: Mulher do Amanhã",
+      imageUrl: "img/supergirl.jpg",
+      description: "Novas aventuras cósmicas da Supergirl",
+      streaming: "Max",
+      episodes: [
+        { date: "26/06/2026", type: "Estreia" },
+        { date: "03/07/2026", type: "Novo" }
+      ],
+      activeUntil: "03/08/2026"
+    },
+    {
+      title: "Batman 2",
+      imageUrl: "img/batman2.jpg",
+      description: "Continuação da saga do Batman de Matt Reeves",
+      streaming: "Max",
+      episodes: [
+        { date: "26/06/2026", type: "Estreia" },
+        { date: "03/07/2026", type: "Novo" }
+      ],
+      activeUntil: "03/08/2026"
+    },
+    {
+      title: "Cara de Barro",
+      imageUrl: "img/cara-de-barro.jpg",
+      description: "A origem do vilão argiloso de Gotham",
+      streaming: "Max",
+      episodes: [
+        { date: "26/09/2026", type: "Estreia" },
+        { date: "03/10/2026", type: "Novo" }
+      ],
+      activeUntil: "03/11/2026"
+    },
+    {
+      title: "Lanterns",
+      imageUrl: "img/lanterns.jpg",
+      description: "A equipe dos Lanternas Verdes em ação",
+      streaming: "Max",
+      episodes: [
+        { date: "01/01/2026", type: "Estreia" },
+        { date: "08/01/2026", type: "Novo" }
+      ],
+      activeUntil: "08/02/2026"
     },
     {
       title: "Esquadrão Suicida: Renascimento",
@@ -54,10 +131,10 @@ const allSeriesDatabase = {
       description: "Nova formação do Esquadrão Suicida",
       streaming: "Max",
       episodes: [
-        { date: "15/03/2024", type: "Estreia" },
-        { date: "22/03/2024", type: "Novo" }
+        { date: "15/03/2026", type: "Estreia" },
+        { date: "22/03/2026", type: "Novo" }
       ],
-      activeUntil: "22/04/2024"
+      activeUntil: "22/04/2026"
     }
   ]
 };
