@@ -7,15 +7,25 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1 class="marvel-title">Séries Marvel</h1>
-  <div class="series" id="marvel-series">
-    <!-- Conteúdo será gerado pelo JavaScript -->
+  <div class="filter-container">
+    <select id="filter-platform">
+      <option value="all">Todas as plataformas</option>
+      <option value="Disney+">Disney+</option>
+      <option value="Max">Max</option>
+    </select>
+
+    <select id="filter-status">
+      <option value="active">Em exibição</option>
+      <option value="upcoming">Próximas</option>
+      <option value="all">Todas</option>
+    </select>
   </div>
 
-  <h2 class="dc-titulo">Séries DC</h2>
-  <div class="series_dc" id="dc-series">
-    <!-- Conteúdo será gerado pelo JavaScript -->
-  </div>
+  <h1 class="marvel-title">Séries Marvel</h1>
+  <div class="series-grid" id="marvel-series"></div>
+
+  <h1 class="dc-titulo">Séries DC</h1>
+  <div class="series-grid" id="dc-series"></div>
 
   <div class="last-update">
     Última atualização: <span id="update-time"></span>
