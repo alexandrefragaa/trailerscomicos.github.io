@@ -29,11 +29,13 @@ h1,h2,h3 {
 .marvel-title { 
   color: #e62429;
   text-shadow: 0 0 10px rgba(230, 36, 41, 0.5);
+    text-align: center;
 }
 
 .dc-titulo { 
   color: #0476f2;
   text-shadow: 0 0 10px rgba(4, 118, 242, 0.5);
+    text-align: center;
 }
 
 /* Filtros */
