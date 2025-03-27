@@ -26,7 +26,7 @@ const allSeriesDatabase = {
     },
     {
       title: "Olhos de Wakanda",
-      imageUrl: "img\wakandaeyes.jpg",
+      imageUrl: "img/wakandaeyes.jpg",
       description: "Aventuras do super-herói wakandano",
       streaming: "Disney+",
       episodes: [
@@ -37,7 +37,7 @@ const allSeriesDatabase = {
     },
     {
       title: "Marvel Zombies",
-      imageUrl: "img\legiao_fFpOw0dkBrZR.png",
+      imageUrl: "img/legiao_fFpOw0dkBrZR.png",
       description: "Universo alternativo zumbi do MCU",
       streaming: "Disney+",
       episodes: [
@@ -48,7 +48,7 @@ const allSeriesDatabase = {
     },
     {
       title: "Wonder Man",
-      imageUrl: "img\WONDERMAN.jpg",
+      imageUrl: "img/WONDERMAN.jpg",
       description: "As aventuras do herói cinematográfico Simon Williams",
       streaming: "Disney+",
       episodes: [
@@ -59,7 +59,7 @@ const allSeriesDatabase = {
     },
     {
       title: "Visão",
-      imageUrl: "img\visao.jpg",
+      imageUrl: "img/visao.jpg",
       description: "Jornada do androide após WandaVision",
       streaming: "Disney+",
       episodes: [
@@ -83,7 +83,7 @@ const allSeriesDatabase = {
     },
     {
       title: "Supergirl: Mulher do Amanhã",
-      imageUrl: "img\supergirl.jpg",
+      imageUrl: "img/supergirl.jpg",
       description: "Novas aventuras cósmicas da Supergirl",
       streaming: "Max",
       episodes: [
@@ -94,7 +94,7 @@ const allSeriesDatabase = {
     },
     {
       title: "Batman 2",
-      imageUrl: "\MV5BMTU2NzhiYWUtYThlZi00OWIyLTk3YWEtZjY3NmJjOTZiZDAyXkEyXkFqcGc@._V1_.jpg",
+      imageUrl: "img/MV5BMTU2NzhiYWUtYThlZi00OWIyLTk3YWEtZjY3NmJjOTZiZDAyXkEyXkFqcGc@._V1_.jpg",
       description: "Continuação da saga do Batman de Matt Reeves",
       streaming: "Max",
       episodes: [
@@ -105,7 +105,7 @@ const allSeriesDatabase = {
     },
     {
       title: "Cara de Barro",
-      imageUrl: "img\03035154871002.jpg",
+      imageUrl: "img/03035154871002.jpg",
       description: "A origem do vilão argiloso de Gotham",
       streaming: "Max",
       episodes: [
@@ -116,7 +116,7 @@ const allSeriesDatabase = {
     },
     {
       title: "Lanterns",
-      imageUrl: "img\lanterns.jpg",
+      imageUrl: "img/lanterns.jpg",
       description: "A equipe dos Lanternas Verdes em ação",
       streaming: "Max",
       episodes: [
