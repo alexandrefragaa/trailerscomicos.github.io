@@ -94,7 +94,7 @@ const allSeriesDatabase = {
     },
     {
       title: "Batman 2",
-      imageUrl: "img\Captura de tela 2024-08-13 085730.png",
+      imageUrl: "\MV5BMTU2NzhiYWUtYThlZi00OWIyLTk3YWEtZjY3NmJjOTZiZDAyXkEyXkFqcGc@._V1_.jpg",
       description: "Continuação da saga do Batman de Matt Reeves",
       streaming: "Max",
       episodes: [
