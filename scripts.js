@@ -48,7 +48,7 @@ const allSeriesDatabase = {
     },
     {
       title: "Wonder Man",
-      imageUrl: "img/WONDERMAN.jpg",
+      imageUrl: "img\WONDERMAN.jpg",
       description: "As aventuras do herói cinematográfico Simon Williams",
       streaming: "Disney+",
       episodes: [
@@ -59,7 +59,7 @@ const allSeriesDatabase = {
     },
     {
       title: "Visão",
-      imageUrl: "img/visao.jpg",
+      imageUrl: "img\visao.jpg",
       description: "Jornada do androide após WandaVision",
       streaming: "Disney+",
       episodes: [
@@ -83,7 +83,7 @@ const allSeriesDatabase = {
     },
     {
       title: "Supergirl: Mulher do Amanhã",
-      imageUrl: "img/supergirl.jpg",
+      imageUrl: "img\supergirl.jpg",
       description: "Novas aventuras cósmicas da Supergirl",
       streaming: "Max",
       episodes: [
@@ -94,7 +94,7 @@ const allSeriesDatabase = {
     },
     {
       title: "Batman 2",
-      imageUrl: "img/batman2.jpg",
+      imageUrl: "img\Captura de tela 2024-08-13 085730.png",
       description: "Continuação da saga do Batman de Matt Reeves",
       streaming: "Max",
       episodes: [
@@ -105,7 +105,7 @@ const allSeriesDatabase = {
     },
     {
       title: "Cara de Barro",
-      imageUrl: "img/03035154871002.jpg",
+      imageUrl: "img\03035154871002.jpg",
       description: "A origem do vilão argiloso de Gotham",
       streaming: "Max",
       episodes: [
@@ -116,7 +116,7 @@ const allSeriesDatabase = {
     },
     {
       title: "Lanterns",
-      imageUrl: "img/lanterns.jpg",
+      imageUrl: "img\lanterns.jpg",
       description: "A equipe dos Lanternas Verdes em ação",
       streaming: "Max",
       episodes: [
