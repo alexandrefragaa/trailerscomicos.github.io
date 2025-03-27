@@ -21,7 +21,7 @@ const allSeriesDatabase = {
     },
     {
       title: "Marvel Zombies",
-      imageUrl: "img/marvel-zombies.jpg",
+      imageUrl: "img/legiao_fFpOw0dkBrZR.png",
       description: "Marvel Zombies será uma mini animada em quatro episódios, situada em uma realidade alternativa do MCU. A série terá protagonistas como Guardião Vermelho, Feiticeira Escarlate, Shang-Chi, Kate Bishop e mais.",
       releaseDate: "03/10/2025"
     },
