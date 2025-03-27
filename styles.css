@@ -308,3 +308,12 @@ h1, h2, h3 {
     justify-content: center;
   }
 }
+
+.future-badge {
+  background: #0476f2;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.7em;
+  font-weight: bold;
+}
