@@ -1,5 +1,6 @@
-const allSeriesDatabase = {
+// Substitua todo o conteúdo do scripts.js por este código:
 
+const allSeriesDatabase = {
   marvel: [
     {
       title: "Demolidor: Renascido",
@@ -35,39 +36,6 @@ const allSeriesDatabase = {
         { date: "08/08/2025", type: "Novo" }
       ],
       activeUntil: "08/09/2025"
-    },
-    {
-      title: "Marvel Zombies",
-      imageUrl: "img/marvel-zombies.jpg",
-      description: "Universo alternativo zumbi do MCU",
-      streaming: "Disney+",
-      episodes: [
-        { date: "03/10/2025", type: "Estreia" },
-        { date: "10/10/2025", type: "Final" }
-      ],
-      activeUntil: "10/11/2025"
-    },
-    {
-      title: "Wonder Man",
-      imageUrl: "img/WONDERMAN.jpg",
-      description: "As aventuras do herói cinematográfico Simon Williams",
-      streaming: "Disney+",
-      episodes: [
-        { date: "01/12/2025", type: "Estreia" },
-        { date: "08/12/2025", type: "Novo" }
-      ],
-      activeUntil: "08/01/2026"
-    },
-    {
-      title: "Visão",
-      imageUrl: "img/visao.jpg",
-      description: "Jornada do androide após WandaVision",
-      streaming: "Disney+",
-      episodes: [
-        { date: "01/01/2026", type: "Estreia" },
-        { date: "08/01/2026", type: "Novo" }
-      ],
-      activeUntil: "08/02/2026"
     }
   ],
   dc: [
@@ -81,50 +49,6 @@ const allSeriesDatabase = {
         { date: "08/08/2025", type: "Novo" }
       ],
       activeUntil: "08/09/2025"
-    },
-    {
-      title: "Supergirl: Mulher do Amanhã",
-      imageUrl: "img/supergirl.jpg",
-      description: "Novas aventuras cósmicas da Supergirl",
-      streaming: "Max",
-      episodes: [
-        { date: "26/06/2026", type: "Estreia" },
-        { date: "03/07/2026", type: "Novo" }
-      ],
-      activeUntil: "03/08/2026"
-    },
-    {
-      title: "Batman 2",
-      imageUrl: "img/batman2.jpg",
-      description: "Continuação da saga do Batman de Matt Reeves",
-      streaming: "Max",
-      episodes: [
-        { date: "26/06/2026", type: "Estreia" },
-        { date: "03/07/2026", type: "Novo" }
-      ],
-      activeUntil: "03/08/2026"
-    },
-    {
-      title: "Cara de Barro",
-      imageUrl: "img/cara-de-barro.jpg",
-      description: "A origem do vilão argiloso de Gotham",
-      streaming: "Max",
-      episodes: [
-        { date: "26/09/2026", type: "Estreia" },
-        { date: "03/10/2026", type: "Novo" }
-      ],
-      activeUntil: "03/11/2026"
-    },
-    {
-      title: "Lanterns",
-      imageUrl: "img/lanterns.jpg",
-      description: "A equipe dos Lanternas Verdes em ação",
-      streaming: "Max",
-      episodes: [
-        { date: "01/01/2026", type: "Estreia" },
-        { date: "08/01/2026", type: "Novo" }
-      ],
-      activeUntil: "08/02/2026"
     },
     {
       title: "Esquadrão Suicida: Renascimento",
@@ -151,7 +75,6 @@ class SeriesManager {
     this.setupFilters();
     this.setupPlatformFilters();
     this.renderAllContent();
-    this.setupAutoUpdate();
   }
 
   setupFilters() {
@@ -170,7 +93,9 @@ class SeriesManager {
       badge.addEventListener('click', () => {
         document.querySelectorAll('.platform-badge').forEach(b => b.classList.remove('active'));
         badge.classList.add('active');
-        this.selectedPlatform = badge.textContent.trim() === 'Todas' ? 'all' : badge.textContent.trim();
+        this.selectedPlatform = badge.classList.contains('all') ? 'all' : 
+                             badge.classList.contains('disney-plus') ? 'Disney+' : 
+                             'Max';
         this.renderAllContent();
       });
     });
@@ -206,33 +131,34 @@ class SeriesManager {
     switch(this.currentFilter) {
       case 'current': return status.isCurrent && platformMatch;
       case 'next-months': return status.isNextMonths && platformMatch;
+      case 'all': return platformMatch;
       default: return platformMatch;
     }
   }
 
   createSeriesCard(series) {
     const status = this.getSeriesStatus(series);
-    const platformClass = `platform-${series.streaming.toLowerCase().replace(/\+/g, 'plus')}`;
+    const platformClass = series.streaming.toLowerCase().replace('+', '-plus');
 
     return `
-      <div class="serie ${platformClass}">
+      <div class="serie">
         <div class="serie-header">
           <div class="platform-tag ${platformClass}">${series.streaming}</div>
           <div class="status-indicator">
             ${status.isCurrent ? '<span class="current-badge">No Ar</span>' : ''}
             ${status.isNextMonths ? '<span class="upcoming-badge">Em Breve</span>' : ''}
-            ${status.isNextYears ? `<span class="future-badge">${new Date(series.episodes[0].date).getFullYear()}</span>` : ''}
           </div>
         </div>
         
         <div class="media-container">
           ${series.embedUrl ? 
-            `<iframe src="${series.embedUrl}" allowfullscreen title="${series.title}"></iframe>` : 
-            `<img src="${series.imageUrl}" alt="${series.title}">`}
+            `<iframe src="${series.embedUrl}" frameborder="0" allowfullscreen></iframe>` : 
+            `<img src="${series.imageUrl || 'https://via.placeholder.com/300x169?text=Poster+Indispon%C3%ADvel'}" alt="${series.title}">`}
         </div>
 
         <div class="serie-info">
-          <h2>${series.title}</h2>
+          <h3>${series.title}</h3>
+          <p>${series.description}</p>
           <div class="timeline">
             ${series.episodes.map(ep => `
               <div class="timeline-item ${this.parseDate(ep.date) <= new Date() ? 'aired' : ''}">
@@ -252,10 +178,13 @@ class SeriesManager {
   renderAllContent() {
     const renderSection = (containerId, seriesList) => {
       const container = document.getElementById(containerId);
-      container.innerHTML = seriesList
-        .filter(series => this.filterSeries(series))
-        .map(series => this.createSeriesCard(series))
-        .join('') || `<p class="no-series">Nenhuma série encontrada</p>`;
+      const filteredSeries = seriesList.filter(series => this.filterSeries(series));
+      
+      if (filteredSeries.length > 0) {
+        container.innerHTML = filteredSeries.map(series => this.createSeriesCard(series)).join('');
+      } else {
+        container.innerHTML = '<p class="no-series">Nenhuma série encontrada com esses filtros</p>';
+      }
     };
 
     renderSection('marvel-series', allSeriesDatabase.marvel);
@@ -263,25 +192,18 @@ class SeriesManager {
     this.updateTimestamp();
   }
 
-  setupAutoUpdate() {
-    setInterval(() => {
-      this.renderAllContent();
-    }, 3600000); // Atualiza a cada hora
-  }
-
   updateTimestamp() {
     document.getElementById('update-time').textContent = 
-      new Date().toLocaleString('pt-BR');
+      new Date().toLocaleString('pt-BR', { 
+        day: '2-digit', 
+        month: '2-digit', 
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
   }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  try {
-    new SeriesManager();
-  } catch (error) {
-    console.error('Erro ao iniciar:', error);
-    document.querySelectorAll('.series-grid').forEach(container => {
-      container.innerHTML = '<p class="error">Erro ao carregar conteúdo</p>';
-    });
-  }
+  new SeriesManager();
 });
