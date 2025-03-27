@@ -97,4 +97,53 @@ class SeriesManager {
 
   isUpcoming(releaseDate, today) {
     const release = this.parseDate(releaseDate);
-    return release > today
+    return release > today;
+  }
+
+  parseDate(dateStr) {
+    // Suporta formatos: DD/MM/YYYY, MM/YYYY e YYYY
+    const parts = dateStr.split('/');
+    if (parts.length === 3) return new Date(parts[2], parts[1]-1, parts[0]);
+    if (parts.length === 2) return new Date(parts[1], parts[0]-1, 1);
+    return new Date(parts[0], 0, 1); // Apenas ano
+  }
+
+  createMediaElement(series) {
+    if (series.embedUrl) {
+      return `<iframe src="${series.embedUrl}" allowfullscreen title="${series.title}"></iframe>`;
+    }
+    return `<img src="${series.imageUrl}" alt="${series.title}" class="series-image">`;
+  }
+
+  renderSeries() {
+    const { marvel, dc } = this.getUpcomingSeries();
+    
+    document.getElementById('marvel-series').innerHTML = this.generateSeriesCards(marvel);
+    document.getElementById('dc-series').innerHTML = this.generateSeriesCards(dc);
+    
+    this.updateTimestamp();
+  }
+
+  generateSeriesCards(seriesList) {
+    return seriesList.map(series => `
+      <div class="serie">
+        <h2>${series.title}</h2>
+        <div class="media-container">
+          ${this.createMediaElement(series)}
+        </div>
+        <p class="description">${series.description}</p>
+        <p class="release-date">Data de lançamento: ${series.releaseDate}</p>
+      </div>
+    `).join('');
+  }
+
+  setupAutoUpdate() {
+    setInterval(() => this.renderSeries(), this.updateFrequency);
+  }
+
+  updateTimestamp() {
+    document.getElementById('update-time').textContent = new Date().toLocaleString();
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => new SeriesManager());
