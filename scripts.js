@@ -1,43 +1,130 @@
 const allSeriesDatabase = {
   marvel: [
     {
-      title: "Agatha: Darkhold Diaries",
-      embedUrl: "https://www.youtube.com/embed/ZgKizhUuT7E",
-      description: "Spin-off de WandaVision com Kathryn Hahn",
+      title: "Demolidor: Renascido",
+      embedUrl: "https://www.youtube.com/embed/9KZyUQpihsE",
+      description: "Continuação da série do Demolidor com Charlie Cox",
       streaming: "Disney+",
       episodes: [
-        { date: "18/09/2024", type: "Estreia" },
-        { date: "25/09/2024", type: "Novo" },
-        { date: "02/10/2024", type: "Novo" }
+        { date: "04/03/2025", type: "Estreia" },
+        { date: "11/03/2025", type: "Novo" },
+        { date: "18/03/2025", type: "Final" }
       ],
-      activeUntil: "30/10/2024"
+      activeUntil: "18/04/2025" // 30 dias após último episódio
     },
     {
-      title: "Echo - Temporada 1",
-      imageUrl: "img/echo.jpg",
-      description: "Série da heroína indígena Maya Lopez",
+      title: "Coração de Ferro",
+      embedUrl: "https://www.youtube.com/embed/OoKSKzqpPy4",
+      description: "A jornada de Riri Williams como nova heroína tecnológica",
       streaming: "Disney+",
       episodes: [
-        { date: "09/01/2024", type: "Estreia" },
-        { date: "16/01/2024", type: "Final" }
+        { date: "24/06/2025", type: "Estreia" },
+        { date: "01/07/2025", type: "Novo" },
+        { date: "08/07/2025", type: "Final" }
       ],
-      activeUntil: "30/01/2024"
+      activeUntil: "08/08/2025"
     },
-    // ... (mantenha as outras séries Marvel)
+    {
+      title: "Olhos de Wakanda",
+      imageUrl: "img/wakandaeyes.jpg",
+      description: "Aventuras do super-herói wakandano",
+      streaming: "Disney+",
+      episodes: [
+        { date: "01/08/2025", type: "Estreia" },
+        { date: "08/08/2025", type: "Novo" }
+      ],
+      activeUntil: "08/09/2025"
+    },
+    {
+      title: "Marvel Zombies",
+      imageUrl: "img/legiao_fFpOw0dkBrZR.png",
+      description: "Universo alternativo zumbi do MCU",
+      streaming: "Disney+",
+      episodes: [
+        { date: "03/10/2025", type: "Estreia" },
+        { date: "10/10/2025", type: "Final" }
+      ],
+      activeUntil: "10/11/2025"
+    },
+    {
+      title: "Wonder Man",
+      imageUrl: "img/WONDERMAN.jpg",
+      description: "As aventuras do herói cinematográfico Simon Williams",
+      streaming: "Disney+",
+      episodes: [
+        { date: "01/12/2025", type: "Estreia" },
+        { date: "08/12/2025", type: "Novo" }
+      ],
+      activeUntil: "08/01/2026"
+    },
+    {
+      title: "Visão",
+      imageUrl: "img/visao.jpg",
+      description: "Jornada do androide após WandaVision",
+      streaming: "Disney+",
+      episodes: [
+        { date: "01/01/2026", type: "Estreia" },
+        { date: "08/01/2026", type: "Novo" }
+      ],
+      activeUntil: "08/02/2026"
+    }
   ],
   dc: [
     {
-      title: "The Penguin",
-      imageUrl: "img/penguin.jpg",
-      description: "Spin-off de The Batman com Colin Farrell",
+      title: "Pacificador - Temporada 2",
+      embedUrl: "https://www.youtube.com/embed/OJGFcVfct4Y",
+      description: "As novas missões do anti-herói interpretado por John Cena",
       streaming: "Max",
       episodes: [
-        { date: "22/10/2024", type: "Estreia" },
-        { date: "29/10/2024", type: "Novo" }
+        { date: "01/08/2025", type: "Estreia" },
+        { date: "08/08/2025", type: "Novo" }
       ],
-      activeUntil: "30/11/2024"
+      activeUntil: "08/09/2025"
     },
-    // ... (mantenha as outras séries DC)
+    {
+      title: "Supergirl: Mulher do Amanhã",
+      imageUrl: "img/supergirl.jpg",
+      description: "Novas aventuras cósmicas da Supergirl",
+      streaming: "Max",
+      episodes: [
+        { date: "26/06/2026", type: "Estreia" },
+        { date: "03/07/2026", type: "Novo" }
+      ],
+      activeUntil: "03/08/2026"
+    },
+    {
+      title: "Batman 2",
+      imageUrl: "img/batman2.png", // Nome de arquivo corrigido
+      description: "Continuação da saga do Batman de Matt Reeves",
+      streaming: "Max",
+      episodes: [
+        { date: "26/06/2026", type: "Estreia" },
+        { date: "03/07/2026", type: "Novo" }
+      ],
+      activeUntil: "03/08/2026"
+    },
+    {
+      title: "Cara de Barro",
+      imageUrl: "img/03035154871002.jpg",
+      description: "A origem do vilão argiloso de Gotham",
+      streaming: "Max",
+      episodes: [
+        { date: "26/09/2026", type: "Estreia" },
+        { date: "03/10/2026", type: "Novo" }
+      ],
+      activeUntil: "03/11/2026"
+    },
+    {
+      title: "Lanterns",
+      imageUrl: "img/lanterns.jpg",
+      description: "A equipe dos Lanternas Verdes em ação",
+      streaming: "Max",
+      episodes: [
+        { date: "01/01/2026", type: "Estreia" },
+        { date: "08/01/2026", type: "Novo" }
+      ],
+      activeUntil: "08/02/2026"
+    }
   ]
 };
 
