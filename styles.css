@@ -1,102 +1,144 @@
+/* Estilos Gerais */
 body {
-  text-align: center;
   background-color: #0f0f0f;
-  font-family: Arial, sans-serif;
-  color: #fff;
+  font-family: 'Arial', sans-serif;
+  color: #ffffff;
+  margin: 0;
   padding: 20px;
+  text-align: center;
 }
 
-
+/* Títulos Principais */
 h1, h2 {
-  font-size: 36px;
-  text-align: center;
-  margin-bottom: 20px;
+  font-size: 2.5rem;
+  margin: 30px 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
-h1 {
+/* Cores por Editora */
+.marvel-title {
   color: #FF0000;
+  text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
 }
 
-h2 {
-  color: #FF0000; /* cor vermelha */
+.dc-titulo, .series-titulo {
+  color: #800080;
+  text-shadow: 0 0 10px rgba(128, 0, 128, 0.5);
 }
 
-.filmes_dc h1, .dc-titulo, .series-titulo {
-  color: #800080; /* cor roxa */
+/* Container de Séries */
+.series-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-.filmes, .series, .filmes_dc, .series_dc {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.filme, .serie {
+/* Cards de Séries */
+.serie {
+  background: #1a1a1a;
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  width: 320px;
   margin: 20px;
-  width: 300px;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
   display: inline-block;
   vertical-align: top;
-}
-
-.filme h2, .serie h2 {
-  padding: 10px;
-  border-radius: 10px 10px 0 0;
-  color: #f9f6fa;
-  text-align: center;
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-.filme iframe, .serie iframe, .filme img, .serie img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 10px 10px 0 0;
-}
-
-.filme p, .serie p {
-  padding: 10px;
-  border-radius: 0 0 10px 10px;
-  color: white;
-  font-size: 16px;
-  line-height: 1.5;
-  margin-bottom: 10px;
-}
-
-.series_dc {
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  display: block;
-}
-
-.series_dc .serie {
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   overflow: hidden;
-  display: inline-block;
-  vertical-align: top;
+  border: 1px solid #333;
 }
 
-.series_dc .serie h2 {
-  padding: 10px;
+.serie:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Cabeçalho do Card */
+.serie h2 {
+  font-size: 1.5rem;
+  padding: 15px;
+  margin: 0;
+  background: linear-gradient(to right, #2a2a2a, #1a1a1a);
   color: #fff;
-  text-align: center;
-  font-size: 24px;
-  margin-bottom: 10px;
+  border-bottom: 1px solid #333;
 }
 
-.series_dc .serie p {
+/* Conteúdo Multimídia */
+.serie-media {
+  height: 180px;
+  overflow: hidden;
+}
+
+.serie iframe, .serie img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: none;
+}
+
+/* Descrição */
+.serie-desc {
+  padding: 15px;
+  text-align: left;
+}
+
+.serie p {
+  color: #e0e0e0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 5px 0;
+}
+
+/* Data de Lançamento */
+.release-date {
+  display: block;
   padding: 10px;
-  border-radius: 0 0 10px 10px;
-  color: rgb(255, 255, 255);
-  font-size: 16px;
-  line-height: 1.5;
-  margin-bottom: 10px;
+  background: #2a2a2a;
+  color: #aaa;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+/* Seções Específicas */
+#marvel-series .serie {
+  border-top: 3px solid #FF0000;
+}
+
+#dc-series .serie {
+  border-top: 3px solid #800080;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .serie {
+    width: 100%;
+    margin: 10px 0;
+  }
+  
+  h1, h2 {
+    font-size: 2rem;
+  }
+}
+
+/* Efeito de Destaque para Séries Recentes */
+.new-release {
+  position: relative;
+}
+
+.new-release::before {
+  content: "NOVO";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #FF0000;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  z-index: 2;
+}
+
+#dc-series .new-release::before {
+  background: #800080;
 }
