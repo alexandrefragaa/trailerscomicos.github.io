@@ -147,6 +147,10 @@ class SeriesManager {
   }
 
   init() {
+    // Ativar filtros padrão
+    document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
+    document.querySelector('.platform-badge[data-platform="all"]').classList.add('active');
+    
     this.setupFilters();
     this.setupPlatformFilters();
     this.renderAllContent();
@@ -191,27 +195,35 @@ class SeriesManager {
     const threeMonthsFromNow = new Date();
     threeMonthsFromNow.setMonth(threeMonthsFromNow.getMonth() + 3);
 
+    // Verifica se está no ar (este mês)
+    const currentMonthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+    const currentMonthEnd = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+    
     return {
-      isCurrent: today >= firstEpisodeDate && today <= lastEpisodeDate,
+      isCurrent: (today >= firstEpisodeDate && today <= lastEpisodeDate) || 
+                (firstEpisodeDate >= currentMonthStart && firstEpisodeDate <= currentMonthEnd),
       isNextMonths: firstEpisodeDate > today && firstEpisodeDate <= threeMonthsFromNow,
-      isNextYears: firstEpisodeDate.getFullYear() > today.getFullYear()
+      isAll: true // Para o filtro "Todas"
     };
   }
 
   filterSeries(series) {
     const status = this.getSeriesStatus(series);
+    
+    // Filtro por plataforma
     const platformMatch = this.selectedPlatform === 'all' || 
-                         series.streaming.toLowerCase() === this.selectedPlatform.toLowerCase();
+                         series.streaming.toLowerCase().includes(this.selectedPlatform.toLowerCase());
 
     // Filtro por status
-    let statusMatch = true;
-    if (this.currentFilter === 'current') {
-      statusMatch = status.isCurrent;
-    } else if (this.currentFilter === 'next-months') {
-      statusMatch = status.isNextMonths;
+    switch(this.currentFilter) {
+      case 'current': 
+        return status.isCurrent && platformMatch;
+      case 'next-months': 
+        return status.isNextMonths && platformMatch;
+      case 'all':
+      default:
+        return platformMatch;
     }
-
-    return platformMatch && statusMatch;
   }
 
   createSeriesCard(series) {
