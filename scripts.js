@@ -37,7 +37,7 @@ const allSeriesDatabase = {
     },
     {
       title: "Marvel Zombies",
-      imageUrl: "img/marvel-zombies.jpg",
+      imageUrl: "img/legiao_fFpOw0dkBrZR.png",
       description: "Universo alternativo zumbi do MCU",
       streaming: "Disney+",
       episodes: [
@@ -105,7 +105,7 @@ const allSeriesDatabase = {
     },
     {
       title: "Cara de Barro",
-      imageUrl: "img/cara-de-barro.jpg",
+      imageUrl: "img/03035154871002.jpg",
       description: "A origem do vilão argiloso de Gotham",
       streaming: "Max",
       episodes: [
@@ -124,17 +124,6 @@ const allSeriesDatabase = {
         { date: "08/01/2026", type: "Novo" }
       ],
       activeUntil: "08/02/2026"
-    },
-    {
-      title: "Esquadrão Suicida: Renascimento",
-      embedUrl: "https://www.youtube.com/embed/kg_jH3uIgMs",
-      description: "Nova formação do Esquadrão Suicida",
-      streaming: "Max",
-      episodes: [
-        { date: "15/03/2026", type: "Estreia" },
-        { date: "22/03/2026", type: "Novo" }
-      ],
-      activeUntil: "22/04/2026"
     }
   ]
 };
