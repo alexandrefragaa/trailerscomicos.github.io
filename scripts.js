@@ -1,4 +1,5 @@
-const allmoviesDatabase = {
+// Banco de dados completo de filmes
+const allMoviesDatabase = {
   marvel: [
     {
       title: "Thunderbolts",
@@ -24,7 +25,6 @@ const allmoviesDatabase = {
       releaseDate: "07/11/2025"
     }
   ],
-
   dc: [
     {
       title: "Superman: O Legado",
@@ -33,32 +33,90 @@ const allmoviesDatabase = {
       releaseDate: "11/07/2025"
     },
     {
-    title: "Batman, parte 2",
-    embedUrl: "https://www.youtube.com/embed/...",
-    description: "Segunda parte da saga sombria de Matt Reeves, com Robert Pattinson retornando como o Batman em um confronto com o Coringa.",
-    releaseDate: "03/10/2025"
-},
-{
-    title: "Supergirl : Mulher do Amanhã",
-    embedUrl: "https://www.youtube.com/embed/...",
-    description: "Baseado na HQ homônima, acompanha Kara Zor-El em uma jornada cósmica repleta de vingança e redenção.",
-    releaseDate: "26/12/2025"
-  }
-]
+      title: "Batman, parte 2",
+      embedUrl: "https://www.youtube.com/embed/...",
+      description: "Segunda parte da saga sombria de Matt Reeves, com Robert Pattinson retornando como o Batman em um confronto com o Coringa.",
+      releaseDate: "03/10/2025"
+    },
+    {
+      title: "Supergirl: Mulher do Amanhã",
+      embedUrl: "https://www.youtube.com/embed/...",
+      description: "Baseado na HQ homônima, acompanha Kara Zor-El em uma jornada cósmica repleta de vingança e redenção.",
+      releaseDate: "26/12/2025"
+    }
+  ]
 };
 
-//Função para filtro de datas dos fimes 
-function getCurrentMovies() { 
-  const today = new Date().toISOString().split('T')[0];
-
-return {
-marvel: allmoviesDatabase.marvel.filter(movie => movie.releaseDate >= today),
-dc: allmoviesDatabase.dc.filter(movie => movie.releaseDate >= today)
-};
+// Função para converter data no formato DD/MM/YYYY para objeto Date
+function parseDate(dateString) {
+  const [day, month, year] = dateString.split('/').map(Number);
+  return new Date(year, month - 1, day);
 }
 
-// Banco de dados dinamico (Filmes futuro)
-const MovieDatabase = getCurrentMovies();
+// Função para filtrar filmes futuros
+function getCurrentMovies() {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // Remove a hora para comparação apenas de datas
 
-//Atualizaçao auto 
-console.log("Filmes atualizados:", movieDatabase);
+  return {
+    marvel: allMoviesDatabase.marvel.filter(movie => {
+      const releaseDate = parseDate(movie.releaseDate);
+      return releaseDate >= today;
+    }),
+    dc: allMoviesDatabase.dc.filter(movie => {
+      const releaseDate = parseDate(movie.releaseDate);
+      return releaseDate >= today;
+    })
+  };
+}
+
+// Banco de dados dinâmico (apenas filmes futuros)
+let movieDatabase = getCurrentMovies();
+
+// Função para renderizar os filmes na página
+function renderMovies() {
+  movieDatabase = getCurrentMovies(); // Atualiza o banco de dados
+  
+  const marvelContainer = document.getElementById('marvel-movies');
+  const dcContainer = document.getElementById('dc-movies');
+  
+  // Limpa os containers
+  marvelContainer.innerHTML = '';
+  dcContainer.innerHTML = '';
+  
+  // Renderiza filmes da Marvel
+  movieDatabase.marvel.forEach(movie => {
+    const trailerUrl = Array.isArray(movie.embedUrl) ? movie.embedUrl[0] : movie.embedUrl;
+    
+    const movieElement = document.createElement('div');
+    movieElement.className = 'filme';
+    movieElement.innerHTML = `
+      <h2>${movie.title}</h2>
+      <iframe src="${trailerUrl}" allowfullscreen></iframe>
+      <p>${movie.description}</p>
+      <p>Data de lançamento: ${movie.releaseDate}</p>
+    `;
+    marvelContainer.appendChild(movieElement);
+  });
+  
+  // Renderiza filmes da DC
+  movieDatabase.dc.forEach(movie => {
+    const trailerUrl = Array.isArray(movie.embedUrl) ? movie.embedUrl[0] : movie.embedUrl;
+    
+    const movieElement = document.createElement('div');
+    movieElement.className = 'filme';
+    movieElement.innerHTML = `
+      <h2>${movie.title}</h2>
+      <iframe src="${trailerUrl}" allowfullscreen></iframe>
+      <p>${movie.description}</p>
+      <p>Data de lançamento: ${movie.releaseDate}</p>
+    `;
+    dcContainer.appendChild(movieElement);
+  });
+}
+
+// Atualiza automaticamente a cada dia (86400000 ms = 1 dia)
+setInterval(renderMovies, 86400000);
+
+// Renderiza os filmes quando a página carrega
+window.addEventListener('DOMContentLoaded', renderMovies);
