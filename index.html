@@ -7,19 +7,20 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="filter-container">
-    <select id="filter-platform">
-      <option value="all">Todas as plataformas</option>
-      <option value="Disney+">Disney+</option>
-      <option value="Max">Max</option>
-    </select>
+<div class="filter-buttons">
+        <button class="filter-btn" data-filter="all">Todas</button>
+        <button class="filter-btn" data-filter="next-months">Lançamentos</button>
+      <button class="filter-btn active" data-filter="current">No Ar</button>
 
-    <select id="filter-status">
-      <option value="active">Em exibição</option>
-      <option value="upcoming">Próximas</option>
-      <option value="all">Todas</option>
-    </select>
+    </div>
   </div>
+
+ <div class="filter-group">
+    <h3>Plataformas:</h3>
+    <div class="platform-badges">
+      <span class="platform-badge disney-plus">Disney+</span>
+      <span class="platform-badge max">Max</span>
+      <span class="platform-badge hbo">HBO</span>
 
   <h1 class="marvel-title">Séries Marvel</h1>
   <div class="series-grid" id="marvel-series"></div>
