@@ -129,144 +129,153 @@ const allSeriesDatabase = {
 };
 
 class SeriesManager {
-  constructor() {
-    this.updateInterval = 3600000; // 1 hora
-    this.episodeValidity = 30; // Dias de permanência após último episódio
-    this.init();
-  }
+    constructor() {
+        this.updateInterval = 3600000; // 1 hora
+        this.currentFilters = {
+            platform: 'all',
+            status: 'active'
+        };
+        this.init();
+    }
 
-  init() {
-    this.cleanExpiredContent();
-    this.renderAllContent();
-    this.setupAutoUpdate();
-  }
+    init() {
+        this.setupFilters();
+        this.updateContent();
+        this.setupAutoUpdate();
+    }
 
-  parseDate(dateStr) {
-    const [day, month, year] = dateStr.split('/').map(Number);
-    return new Date(year, month - 1, day);
-  }
+    setupFilters() {
+        document.getElementById('filter-platform').addEventListener('change', (e) => {
+            this.currentFilters.platform = e.target.value;
+            this.renderAllContent();
+        });
 
-  cleanExpiredContent() {
-    const today = new Date();
-    ['marvel', 'dc'].forEach(universe => {
-      allSeriesDatabase[universe] = allSeriesDatabase[universe].filter(series => {
-        const lastEpisodeDate = this.parseDate(series.activeUntil);
-        return lastEpisodeDate >= today;
-      });
-    });
-  }
+        document.getElementById('filter-status').addEventListener('change', (e) => {
+            this.currentFilters.status = e.target.value;
+            this.renderAllContent();
+        });
+    }
 
-  getSeriesStatus(series) {
-    const today = new Date();
-    const nextEpisode = series.episodes.find(ep => this.parseDate(ep.date) > today);
-    const lastEpisodeDate = this.parseDate(series.activeUntil);
-    const daysRemaining = Math.ceil((lastEpisodeDate - today) / (1000 * 3600 * 24));
+    parseDate(dateStr) {
+        const [day, month, year] = dateStr.split('/').map(Number);
+        return new Date(year, month - 1, day);
+    }
 
-    return {
-      isActive: lastEpisodeDate >= today,
-      nextEpisode: nextEpisode ? this.parseDate(nextEpisode.date) : null,
-      daysRemaining
-    };
-  }
+    getSeriesStatus(series) {
+        const today = new Date();
+        const startDate = this.parseDate(series.episodes[0].date);
+        const endDate = this.parseDate(series.activeUntil);
+        const totalEpisodes = series.episodes.length;
+        const releasedEpisodes = series.episodes.filter(ep => 
+            this.parseDate(ep.date) <= today
+        ).length;
 
-  createSeriesCard(series) {
-    const status = this.getSeriesStatus(series);
-    if (!status.isActive) return '';
+        return {
+            isUpcoming: startDate > today,
+            isActive: today >= startDate && today <= endDate,
+            isEnded: today > endDate,
+            progress: (releasedEpisodes / totalEpisodes) * 100,
+            daysUntilStart: Math.ceil((startDate - today) / (1000 * 3600 * 24))
+        };
+    }
 
-    return `
-      <div class="serie">
-        <div class="media-container">
-          ${createMediaElement(series)}
-          <div class="streaming-info">
-            <span class="platform">${series.streaming}</span>
-            ${status.nextEpisode ? `
-              <div class="countdown">
-                <span>Próximo: ${status.nextEpisode.toLocaleDateString('pt-BR')}</span>
-                <progress value="${30 - status.daysRemaining}" max="30"></progress>
-              </div>
-            ` : ''}
-          </div>
-        </div>
-        <h2>${series.title}</h2>
-        <p>${series.description}</p>
-        <div class="episode-schedule">
-          ${series.episodes.map(ep => `
-            <div class="episode ${this.parseDate(ep.date) <= new Date() ? 'released' : ''}">
-              <span>${ep.type}</span>
-              <small>${this.parseDate(ep.date).toLocaleDateString('pt-BR')}</small>
+    createSeriesCard(series) {
+        const status = this.getSeriesStatus(series);
+        
+        // Aplicar filtros
+        if(this.currentFilters.platform !== 'all' && series.streaming !== this.currentFilters.platform) return '';
+        if(this.currentFilters.status === 'active' && !status.isActive) return '';
+        if(this.currentFilters.status === 'upcoming' && !status.isUpcoming) return '';
+
+        return `
+            <div class="serie">
+                <div class="serie-header">
+                    <div class="platform-tag">${series.streaming}</div>
+                    ${status.isUpcoming ? `
+                        <div class="status-tag upcoming">
+                            Estreia em ${status.daysUntilStart} dias
+                        </div>
+                    ` : ''}
+                    ${status.isEnded ? `
+                        <div class="status-tag ended">
+                            Concluída
+                        </div>
+                    ` : ''}
+                </div>
+
+                <div class="media-container">
+                    ${series.embedUrl ? 
+                        `<iframe src="${series.embedUrl}" allowfullscreen title="${series.title}"></iframe>` : 
+                        `<img src="${series.imageUrl}" alt="${series.title}">`}
+                </div>
+
+                <div class="serie-info">
+                    <h2>${series.title}</h2>
+                    <p>${series.description}</p>
+                    
+                    <div class="progress-bar">
+                        <div class="progress" style="width: ${status.progress}%"></div>
+                    </div>
+
+                    <div class="episode-schedule">
+                        ${series.episodes.map((ep, index) => `
+                            <div class="episode ${this.parseDate(ep.date) <= new Date() ? 'released' : ''}">
+                                <span>Ep. ${index + 1} - ${ep.type}</span>
+                                <small>${this.parseDate(ep.date).toLocaleDateString('pt-BR')}</small>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
             </div>
-          `).join('')}
-        </div>
-      </div>
-    `;
-  }
+        `;
+    }
 
-  setupAutoUpdate() {
-    setInterval(() => {
-      this.cleanExpiredContent();
-      this.renderAllContent();
-    }, this.updateInterval);
-  }
+    updateContent() {
+        const today = new Date();
+        
+        // Atualização automática do catálogo
+        ['marvel', 'dc'].forEach(universe => {
+            allSeriesDatabase[universe] = allSeriesDatabase[universe]
+                .filter(series => this.parseDate(series.activeUntil) >= today)
+                .sort((a, b) => this.parseDate(a.episodes[0].date) - this.parseDate(b.episodes[0].date));
+        });
 
-  renderAllContent() {
-    const renderSection = (containerId, seriesList) => {
-      const container = document.getElementById(containerId);
-      container.innerHTML = seriesList
-        .map(series => this.createSeriesCard(series))
-        .join('') || `<p class="no-series">Nenhuma série disponível</p>`;
-    };
+        this.renderAllContent();
+    }
 
-    renderSection('marvel-series', allSeriesDatabase.marvel);
-    renderSection('dc-series', allSeriesDatabase.dc);
-    this.updateTimestamp();
-  }
+    renderAllContent() {
+        const renderSection = (containerId, seriesList) => {
+            const container = document.getElementById(containerId);
+            container.innerHTML = seriesList
+                .map(series => this.createSeriesCard(series))
+                .join('') || `<p class="no-series">Nenhuma série disponível</p>`;
+        };
 
-  updateTimestamp() {
-    document.getElementById('update-time').textContent = 
-      `Última atualização: ${new Date().toLocaleString('pt-BR')}`;
-  }
+        renderSection('marvel-series', allSeriesDatabase.marvel);
+        renderSection('dc-series', allSeriesDatabase.dc);
+        this.updateTimestamp();
+    }
+
+    setupAutoUpdate() {
+        setInterval(() => {
+            this.updateContent();
+        }, this.updateInterval);
+    }
+
+    updateTimestamp() {
+        document.getElementById('update-time').textContent = 
+            `Atualizado em: ${new Date().toLocaleString('pt-BR')}`;
+    }
 }
 
-// CSS Adicional
-.streaming-info {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(transparent, rgba(0,0,0,0.9));
-  padding: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.platform {
-  background: var(--brand-color);
-  padding: 5px 10px;
-  border-radius: 4px;
-  font-size: 0.8em;
-}
-
-.episode-schedule {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 10px;
-  margin-top: 15px;
-}
-
-.episode {
-  background: #2a2a2a;
-  padding: 10px;
-  border-radius: 6px;
-  text-align: center;
-}
-
-.episode.released {
-  opacity: 0.6;
-}
-
-progress {
-  width: 100%;
-  height: 5px;
-  accent-color: #e62429;
-}
+// Inicialização
+document.addEventListener('DOMContentLoaded', () => {
+    try {
+        new SeriesManager();
+    } catch (error) {
+        console.error('Erro ao iniciar:', error);
+        document.querySelectorAll('.series-grid').forEach(container => {
+            container.innerHTML = '<p class="error">Erro ao carregar conteúdo</p>';
+        });
+    }
+});
