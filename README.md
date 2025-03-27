@@ -22,7 +22,7 @@ obs: só mostras os trailers, em breve será adicionado mais coisas
 
 ## 🎥 Trailers embutidos para você assistir sem sair do site
 
-## 🌈 Código-colorido por editora (vermelho Marvel/azul DC)
+## 🌈 Código-colorido por Produtora/Editora das séries ou Streamings (vermelho Marvel/azul DC)
 
 
 
