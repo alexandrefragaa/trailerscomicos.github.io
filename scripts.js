@@ -1,29 +1,50 @@
-// 1. BANCO DE DADOS COMPLETO
+// Banco de dados completo das séries
 const allSeriesDatabase = {
   marvel: [
     {
       title: "Demolidor: Renascido",
-      embedUrl: "https://www.youtube.com/embed/9KZyUQpihsE",
-      imageUrl: "img/demolidor.jpg",
-      description: "Continuação dos eventos de Demolidor na Netflix com Charlie Cox retornando como o herói.",
+      embedUrl: "https://www.youtube.com/embed/9KZyUQpihsE",,
+      description: "Demolidor: Renascido vai continuar os fatos de Demolidor na Netflix, novamente com Charlie Cox no papel do herói, além do retorno de outros personagens, como Rei do Crime, Karen Page e o Justiceiro",
       releaseDate: "04/03/2025"
     },
     {
       title: "Coração de Ferro",
-      embedUrl: "https://www.youtube.com/embed/OoKSKzqpPy4",
-      imageUrl: "img/coracao-ferro.jpg",
-      description: "Riri Williams retorna com sua série própria após Wakanda Para Sempre.",
+      embedUrl: "https://www.youtube.com/embed/OoKSKzqpPy4",,
+      description: "Após estrear no MCU em Wakanda Para Sempre, Riri Williams retorna neste ano com sua série própria em Coração de Ferro",
       releaseDate: "24/06/2025"
+    },
+    {
+      title: "Olhos de Wakanda",
+      imageUrl: "img/wakandaeyes.jpg",
+      description: "A série do super-herói Magnum, chega em 2025. Ela será estrelada por Yahya Abdul-Mateen II no papel central.",
+      releaseDate: "01/08/2025" // Alterado para DD/MM/YYYY
+    },
+    {
+      title: "Marvel Zombies",,
+      imageUrl: "img/marvel-zombies.jpg",
+      description: "Marvel Zombies será uma mini animada em quatro episódios, situada em uma realidade alternativa do MCU. A série terá protagonistas como Guardião Vermelho, Feiticeira Escarlate, Shang-Chi, Kate Bishop e mais.",
+      releaseDate: "03/10/2025"
+    },
+    {
+      title: "Wonder Man",
+      imageUrl: "img/WONDERMAN.jpg",
+      description: "A série do super-herói Magnum, chega em 2025. Ela será estrelada por Yahya Abdul-Mateen II no papel central.",
+      releaseDate: "01/12/2025" // Alterado para DD/MM/YYYY
+    },
+    {
+      title: "Visão",
+      imageUrl: "img/visao.jpg",
+      description: "Spin-off de WandaVision acompanhando a jornada do androide Visão após os eventos da série.",
+      releaseDate: "01/01/2026" // Alterado para DD/MM/YYYY
     }
   ],
   dc: [
     {
       title: "Pacificador - Temporada 2",
-      embedUrl: "https://www.youtube.com/embed/OJGFcVfct4Y",
-      imageUrl: "img/pacificador.jpeg",
+      embedUrl: "https://www.youtube.com/embed/OJGFcVfct4Y",,
       description: "Esquadrão militar formado por criaturas sobrenaturais em missões especiais.",
-      releaseDate: "08/2025"
-    }
+      releaseDate: "01/08/2025" // Alterado para DD/MM/YYYY
+    },
     {
       title: "Supergirl: Mulher do Amanhã",
       imageUrl: "img/supergirl.jpg",
@@ -33,7 +54,7 @@ const allSeriesDatabase = {
     {
       title: "Batman 2",
       imageUrl: "img/Captura de tela 2024-08-13 085730.png",
-      description: "Conta com a presença de Krypto o Supercão, Supergirl ajuda Ruthye a perseguir Krem pelas estrelas depois que o bandido mata o pai da garota",
+      description: "Segunda parte da saga sombria de Matt Reeves, com Robert Pattinson retornando como o Batman em um confronto com o Coringa.",
       releaseDate: "26/06/2026"
     },
     {
@@ -45,78 +66,54 @@ const allSeriesDatabase = {
     {
       title: "Lanterns",
       imageUrl: "img/lanterns.jpg",
-      description: "Série que reúne todos os Lanternas Verdes",
-      releaseDate: "2026"
+      description: "Série que reúne todos os Lanternas Verdes.",
+      releaseDate: "01/01/2026" // Alterado para DD/MM/YYYY
     }
   ]
 };
-  ]
-};
 
-// 2. SISTEMA DE RENDERIZAÇÃO CORRIGIDO
+// Função para criar elemento de mídia
+function createMediaElement(series) {
+  if (series.embedUrl) {
+    return `<iframe src="${series.embedUrl}" allowfullscreen title="${series.title}"></iframe>`;
+  }
+  return `<img src="${series.imageUrl}" alt="${series.title}">`;
+}
+
+// Classe para gerenciar as séries
 class SeriesManager {
   constructor() {
-    this.updateFrequency = 5000; // 5 segundos para teste (altere para 86400000 = 24h)
+    this.updateFrequency = 60000; // 1 minuto para testes (mude para 86400000 = 24h)
     this.init();
   }
 
   init() {
-    this.renderSeries();
+    this.renderAllSeries();
     this.setupAutoUpdate();
   }
 
-  getUpcomingSeries() {
+  parseDate(dateStr) {
+    const [day, month, year] = dateStr.split('/').map(Number);
+    return new Date(year, month - 1, day || 1);
+  }
+
+  renderAllSeries() {
     const today = new Date();
     today.setHours(0, 0, 0, 0); // Ignora horas/minutos
     
-    return {
-      marvel: allSeriesDatabase.marvel.filter(series => 
-        !this.isReleased(series.releaseDate, today)
-      ,
-      dc: allSeriesDatabase.dc.filter(series => 
-        !this.isReleased(series.releaseDate, today)
-    };
-  }
-
-  isReleased(releaseDate, today) {
-    return this.parseDate(releaseDate) <= today;
-  }
-
-  parseDate(dateStr) {
-    const parts = dateStr.split('/');
-    // Formato DD/MM/YYYY
-    if (parts.length === 3) {
-      return new Date(parts[2], parts[1]-1, parts[0]);
-    }
-    // Formato MM/YYYY
-    if (parts.length === 2) {
-      return new Date(parts[1], parts[0]-1, 1);
-    }
-    // Formato YYYY
-    return new Date(parts[0], 0, 1);
-  }
-
-  createMediaElement(series) {
-    if (series.embedUrl) {
-      return `<iframe src="${series.embedUrl}" allowfullscreen></iframe>`;
-    }
-    return `<img src="${series.imageUrl}" alt="${series.title}">`;
-  }
-
-  renderSeries() {
-    const { marvel, dc } = this.getUpcomingSeries();
+    // Render Marvel
+    const marvelContainer = document.getElementById('marvel-series');
+    marvelContainer.innerHTML = allSeriesDatabase.marvel
+      .filter(series => this.parseDate(series.releaseDate) >= today)
+      .map(series => this.createSeriesCard(series))
+      .join('') || '<p class="no-series">Nenhuma série Marvel em breve</p>';
     
-    // Debug no console
-    console.log("Séries Marvel:", marvel);
-    console.log("Séries DC:", dc);
-    
-    document.getElementById('marvel-series').innerHTML = 
-      marvel.map(series => this.createSeriesCard(series)).join('') || 
-      '<p class="no-series">Nenhuma série Marvel em breve</p>';
-    
-    document.getElementById('dc-series').innerHTML = 
-      dc.map(series => this.createSeriesCard(series)).join('') || 
-      '<p class="no-series">Nenhuma série DC em breve</p>';
+    // Render DC
+    const dcContainer = document.getElementById('dc-series');
+    dcContainer.innerHTML = allSeriesDatabase.dc
+      .filter(series => this.parseDate(series.releaseDate) >= today)
+      .map(series => this.createSeriesCard(series))
+      .join('') || '<p class="no-series">Nenhuma série DC em breve</p>';
     
     this.updateTimestamp();
   }
@@ -126,35 +123,30 @@ class SeriesManager {
       <div class="serie">
         <h2>${series.title}</h2>
         <div class="media-container">
-          ${this.createMediaElement(series)}
+          ${createMediaElement(series)}
         </div>
         <p>${series.description}</p>
-        <p class="release-date">Lançamento: ${series.releaseDate}</p>
+        <p class="release-date">Data de lançamento: ${series.releaseDate}</p>
       </div>
     `;
   }
 
   setupAutoUpdate() {
-    setInterval(() => {
-      console.log("Atualizando automaticamente...");
-      this.renderSeries();
-    }, this.updateFrequency);
+    setInterval(() => this.renderAllSeries(), this.updateFrequency);
   }
 
   updateTimestamp() {
-    const now = new Date();
-    document.getElementById('update-time').textContent = 
-      `${now.toLocaleDateString()} às ${now.toLocaleTimeString()}`;
+    document.getElementById('update-time').textContent = new Date().toLocaleString('pt-BR');
   }
 }
 
-// 3. INICIALIZAÇÃO (COM VERIFICAÇÃO DE ERROS)
-document.addEventListener('DOMContentLoaded', () => {
+// Inicialização com tratamento de erros
+window.addEventListener('DOMContentLoaded', () => {
   try {
     new SeriesManager();
-    console.log("Sistema iniciado com sucesso!");
+    console.log('Sistema iniciado com sucesso!');
   } catch (error) {
-    console.error("Erro ao iniciar:", error);
+    console.error('Erro ao iniciar:', error);
     document.getElementById('marvel-series').innerHTML = 
       '<p class="error">Erro ao carregar séries Marvel</p>';
     document.getElementById('dc-series').innerHTML = 
