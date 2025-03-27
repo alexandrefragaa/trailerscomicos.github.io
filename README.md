@@ -77,7 +77,8 @@ obs: só mostras os trailers, em breve será adicionado mais coisas
 ### Integração com APIs astronômicas: Usar dados reais de estrelas (ex: NASA API).
 
 # 💬 Comentários e Feedback
-## Adoramos ouvir sua opinião! Você pode:
+## Vou adorar ouvir seu feedback e seu comentário! 
+## Você pode:
 
 ### Deixar um comentário nas issues ou discussions do repositório.
 
