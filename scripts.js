@@ -1,5 +1,3 @@
-// Substitua todo o conteúdo do scripts.js por este código:
-
 const allSeriesDatabase = {
   marvel: [
     {
@@ -8,11 +6,11 @@ const allSeriesDatabase = {
       description: "Continuação da série do Demolidor com Charlie Cox",
       streaming: "Disney+",
       episodes: [
-        { date: "04/03/2025", type: "Estreia" },
-        { date: "11/03/2025", type: "Novo" },
-        { date: "18/03/2025", type: "Final" }
+        { date: "04/03/2023", type: "Estreia" },
+        { date: "11/03/2023", type: "Novo" },
+        { date: "18/03/2023", type: "Final" }
       ],
-      activeUntil: "18/04/2025"
+      activeUntil: "18/04/2023"
     },
     {
       title: "Coração de Ferro",
@@ -20,11 +18,11 @@ const allSeriesDatabase = {
       description: "A jornada de Riri Williams como nova heroína tecnológica",
       streaming: "Disney+",
       episodes: [
-        { date: "24/06/2025", type: "Estreia" },
-        { date: "01/07/2025", type: "Novo" },
-        { date: "08/07/2025", type: "Final" }
+        { date: "24/06/2023", type: "Estreia" },
+        { date: "01/07/2023", type: "Novo" },
+        { date: "08/07/2023", type: "Final" }
       ],
-      activeUntil: "08/08/2025"
+      activeUntil: "08/08/2023"
     },
     {
       title: "Olhos de Wakanda",
@@ -32,10 +30,10 @@ const allSeriesDatabase = {
       description: "Aventuras do super-herói wakandano",
       streaming: "Disney+",
       episodes: [
-        { date: "01/08/2025", type: "Estreia" },
-        { date: "08/08/2025", type: "Novo" }
+        { date: "01/08/2023", type: "Estreia" },
+        { date: "08/08/2023", type: "Novo" }
       ],
-      activeUntil: "08/09/2025"
+      activeUntil: "08/09/2023"
     }
   ],
   dc: [
@@ -45,10 +43,10 @@ const allSeriesDatabase = {
       description: "As novas missões do anti-herói interpretado por John Cena",
       streaming: "Max",
       episodes: [
-        { date: "01/08/2025", type: "Estreia" },
-        { date: "08/08/2025", type: "Novo" }
+        { date: "01/08/2023", type: "Estreia" },
+        { date: "08/08/2023", type: "Novo" }
       ],
-      activeUntil: "08/09/2025"
+      activeUntil: "08/09/2023"
     },
     {
       title: "Esquadrão Suicida: Renascimento",
@@ -56,17 +54,17 @@ const allSeriesDatabase = {
       description: "Nova formação do Esquadrão Suicida",
       streaming: "Max",
       episodes: [
-        { date: "15/03/2026", type: "Estreia" },
-        { date: "22/03/2026", type: "Novo" }
+        { date: "15/03/2024", type: "Estreia" },
+        { date: "22/03/2024", type: "Novo" }
       ],
-      activeUntil: "22/04/2026"
+      activeUntil: "22/04/2024"
     }
   ]
 };
 
 class SeriesManager {
   constructor() {
-    this.currentFilter = 'current';
+    this.currentFilter = 'all'; // Alterado para 'all' como padrão
     this.selectedPlatform = 'all';
     this.init();
   }
@@ -78,27 +76,33 @@ class SeriesManager {
   }
 
   setupFilters() {
-    document.querySelectorAll('.filter-btn').forEach(btn => {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    filterButtons.forEach(btn => {
       btn.addEventListener('click', () => {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        filterButtons.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         this.currentFilter = btn.dataset.filter;
         this.renderAllContent();
       });
     });
+    
+    // Ativar o botão 'all' por padrão
+    document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
   }
 
   setupPlatformFilters() {
-    document.querySelectorAll('.platform-badge').forEach(badge => {
+    const platformBadges = document.querySelectorAll('.platform-badge');
+    platformBadges.forEach(badge => {
       badge.addEventListener('click', () => {
-        document.querySelectorAll('.platform-badge').forEach(b => b.classList.remove('active'));
+        platformBadges.forEach(b => b.classList.remove('active'));
         badge.classList.add('active');
-        this.selectedPlatform = badge.classList.contains('all') ? 'all' : 
-                             badge.classList.contains('disney-plus') ? 'Disney+' : 
-                             'Max';
+        this.selectedPlatform = badge.dataset.platform;
         this.renderAllContent();
       });
     });
+    
+    // Ativar o badge 'all' por padrão
+    document.querySelector('.platform-badge[data-platform="all"]').classList.add('active');
   }
 
   parseDate(dateStr) {
@@ -126,7 +130,7 @@ class SeriesManager {
   filterSeries(series) {
     const status = this.getSeriesStatus(series);
     const platformMatch = this.selectedPlatform === 'all' || 
-                         series.streaming === this.selectedPlatform;
+                         series.streaming.toLowerCase() === this.selectedPlatform.toLowerCase();
 
     switch(this.currentFilter) {
       case 'current': return status.isCurrent && platformMatch;
@@ -147,12 +151,13 @@ class SeriesManager {
           <div class="status-indicator">
             ${status.isCurrent ? '<span class="current-badge">No Ar</span>' : ''}
             ${status.isNextMonths ? '<span class="upcoming-badge">Em Breve</span>' : ''}
+            ${status.isNextYears ? '<span class="future-badge">Próximo Ano</span>' : ''}
           </div>
         </div>
         
         <div class="media-container">
           ${series.embedUrl ? 
-            `<iframe src="${series.embedUrl}" frameborder="0" allowfullscreen></iframe>` : 
+            `<iframe src="${series.embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>` : 
             `<img src="${series.imageUrl || 'https://via.placeholder.com/300x169?text=Poster+Indispon%C3%ADvel'}" alt="${series.title}">`}
         </div>
 
@@ -160,15 +165,19 @@ class SeriesManager {
           <h3>${series.title}</h3>
           <p>${series.description}</p>
           <div class="timeline">
-            ${series.episodes.map(ep => `
-              <div class="timeline-item ${this.parseDate(ep.date) <= new Date() ? 'aired' : ''}">
-                <div class="timeline-point"></div>
-                <div class="timeline-content">
-                  <span>${ep.type}</span>
-                  <small>${this.parseDate(ep.date).toLocaleDateString('pt-BR')}</small>
+            ${series.episodes.map(ep => {
+              const episodeDate = this.parseDate(ep.date);
+              const isAired = episodeDate <= new Date();
+              return `
+                <div class="timeline-item ${isAired ? 'aired' : ''}">
+                  <div class="timeline-point"></div>
+                  <div class="timeline-content">
+                    <span>${ep.type}</span>
+                    <small>${episodeDate.toLocaleDateString('pt-BR')}</small>
+                  </div>
                 </div>
-              </div>
-            `).join('')}
+              `;
+            }).join('')}
           </div>
         </div>
       </div>
@@ -180,11 +189,9 @@ class SeriesManager {
       const container = document.getElementById(containerId);
       const filteredSeries = seriesList.filter(series => this.filterSeries(series));
       
-      if (filteredSeries.length > 0) {
-        container.innerHTML = filteredSeries.map(series => this.createSeriesCard(series)).join('');
-      } else {
-        container.innerHTML = '<p class="no-series">Nenhuma série encontrada com esses filtros</p>';
-      }
+      container.innerHTML = filteredSeries.length > 0 
+        ? filteredSeries.map(series => this.createSeriesCard(series)).join('')
+        : '<p class="no-series">Nenhuma série encontrada com esses filtros</p>';
     };
 
     renderSection('marvel-series', allSeriesDatabase.marvel);
@@ -193,8 +200,9 @@ class SeriesManager {
   }
 
   updateTimestamp() {
+    const now = new Date();
     document.getElementById('update-time').textContent = 
-      new Date().toLocaleString('pt-BR', { 
+      now.toLocaleString('pt-BR', { 
         day: '2-digit', 
         month: '2-digit', 
         year: 'numeric',
@@ -205,5 +213,12 @@ class SeriesManager {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  new SeriesManager();
+  try {
+    new SeriesManager();
+  } catch (error) {
+    console.error('Erro ao iniciar:', error);
+    document.querySelectorAll('.series-grid').forEach(container => {
+      container.innerHTML = '<p class="error">Erro ao carregar conteúdo. Recarregue a página.</p>';
+    });
+  }
 });
