@@ -24,6 +24,32 @@ const allSeriesDatabase = {
       description: "Esquadrão militar formado por criaturas sobrenaturais em missões especiais.",
       releaseDate: "08/2025"
     }
+    {
+      title: "Supergirl: Mulher do Amanhã",
+      imageUrl: "img/supergirl.jpg",
+      description: "Conta com a presença de Krypto o Supercão, Supergirl ajuda Ruthye a perseguir Krem pelas estrelas depois que o bandido mata o pai da garota",
+      releaseDate: "26/06/2026"
+    },
+    {
+      title: "Batman 2",
+      imageUrl: "img/Captura de tela 2024-08-13 085730.png",
+      description: "Conta com a presença de Krypto o Supercão, Supergirl ajuda Ruthye a perseguir Krem pelas estrelas depois que o bandido mata o pai da garota",
+      releaseDate: "26/06/2026"
+    },
+    {
+      title: "Cara de Barro",
+      imageUrl: "img/03035154871002.jpg",
+      description: "É um personagem fictício, supervilão inimigo do Batman que teve seu corpo transformado em uma matéria argilosa. Existiram diversas identidades, com a mais conhecida sendo Basil Karlo",
+      releaseDate: "26/09/2026"
+    },
+    {
+      title: "Lanterns",
+      imageUrl: "img/lanterns.jpg",
+      description: "Série que reúne todos os Lanternas Verdes",
+      releaseDate: "2026"
+    }
+  ]
+};
   ]
 };
 
