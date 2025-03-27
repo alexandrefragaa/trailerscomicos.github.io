@@ -19,6 +19,13 @@ h1,h2,h3 {
   text-align: left;
 }
 
+.platform {
+    margin-bottom: 10px;
+    color: #aaa;
+    font-size: 1rem;
+    text-align: left;
+  }
+
 .marvel-title { 
   color: #e62429;
   text-shadow: 0 0 10px rgba(230, 36, 41, 0.5);
