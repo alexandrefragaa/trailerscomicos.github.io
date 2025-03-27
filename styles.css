@@ -1,4 +1,23 @@
-/* Filtros Interativos */
+/* Estilos Gerais */
+body {
+  font-family: Arial, sans-serif;
+  background: #0f0f0f;
+  color: white;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h1, h2, h3 {
+  color: #fff;
+  text-align: center;
+  margin: 30px 0;
+}
+
+.marvel-title { color: #e62429; }
+.dc-titulo { color: #0476f2; }
+
+/* Filtros */
 .filters-container {
   background: #1a1a1a;
   padding: 20px;
@@ -14,6 +33,7 @@
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .filter-btn {
@@ -35,51 +55,83 @@
   transform: translateY(-2px);
 }
 
-/* Badges de Plataforma */
+/* Plataformas */
 .platform-badges {
   display: flex;
   gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .platform-badge {
   padding: 5px 15px;
   border-radius: 15px;
   font-size: 0.9em;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  border: 2px solid transparent;
+}
+
+.platform-badge.active {
+  border-color: #fff;
+}
+
+.platform-badge:hover {
+  transform: scale(1.05);
+}
+
+.all {
+  background: #666;
+  border-color: #999;
 }
 
 .disney-plus {
   background: #113ccf;
-  border: 2px solid #1f4feb;
+  border-color: #1f4feb;
 }
 
 .max {
   background: #00a8e1;
-  border: 2px solid #00c8ff;
+  border-color: #00c8ff;
 }
 
-.hbo {
-  background: #942e8a;
-  border: 2px solid #b53da9;
+/* Grid de Séries */
+.series-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+  margin: 30px 0;
 }
 
-/* Cards por Universo */
-.universe-marvel .serie {
-  border-left: 4px solid #e62429;
+.serie {
+  background: #1a1a1a;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease;
 }
 
-.universe-dc .serie {
-  border-left: 4px solid #0476f2;
+.serie:hover {
+  transform: translateY(-5px);
 }
 
-/* Plataformas no Card */
-.platform-disney-plus {
-  border-bottom: 3px solid #113ccf;
+/* Cabeçalho */
+.serie-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  position: relative;
 }
 
-.platform-max {
-  border-bottom: 3px solid #00a8e1;
+.platform-tag {
+  background: rgba(0,0,0,0.7);
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.8em;
 }
 
-.platform-hbo {
-  border-bottom: 3px solid #942e8a;
-}
+/* Mídia */
+.media-container {
+  height: 200px;
+  overflow: hidden;
+  position: relative
