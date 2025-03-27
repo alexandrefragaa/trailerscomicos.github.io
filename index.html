@@ -1,101 +1,127 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Séries Marvel e DC</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+// 1. BANCO DE DADOS COMPLETO COM IMAGENS E TRAILERS
+const allMoviesDatabase = {
+  marvel: [
+    {
+      title: "Thunderbolts",
+      embedUrl: "https://www.youtube.com/embed/8OAZI6Q9Qj8",
+      imageUrl: "img/thunderbolts.jpg",
+      description: "Um grupo de anti-heróis e vilões se une em uma missão secreta.",
+      releaseDate: "01/05/2025"
+    },
+    {
+      title: "Quarteto Fantastico: Novos Passos",
+      imageUrl: "img/quarteto-fantastico.jpg",
+      description: "A primeira família dos quadrinhos chega ao MCU.",
+      releaseDate: "25/07/2025"
+    },
+    {
+      title: "Blade",
+      embedUrl: "https://www.youtube.com/embed/8OAZI6Q9Qj8",
+      imageUrl: "img/blade.jpg",
+      description: "O caçador de vampiros retorna em um filme sombrio.",
+      releaseDate: "07/11/2025"
+    },
+    {
+      title: "Demolidor: Renascido",
+      embedUrl: "https://www.youtube.com/embed/9KZyUQpihsE",
+      imageUrl: "img/demolidor.jpg",
+      description: "Charlie Cox retorna como o Demolidor.",
+      releaseDate: "04/03/2025"
+    }
+  ],
+  dc: [
+    {
+      title: "Superman: O Legado",
+      imageUrl: "img/superman-legado.jpg",
+      description: "Nova versão do Superman.",
+      releaseDate: "11/07/2025"
+    },
+    {
+      title: "Batman, parte 2",
+      embedUrl: "https://www.youtube.com/embed/...",
+      imageUrl: "img/batman-parte2.jpg",
+      description: "Robert Pattinson retorna como Batman.",
+      releaseDate: "03/10/2025"
+    },
+    {
+      title: "Pacificador - Temporada 2",
+      imageUrl: "img/pacificador.jpg",
+      description: "Esquadrão militar com criaturas sobrenaturais.",
+      releaseDate: "08/2025"
+    }
+  ]
+};
 
-  <h1 class="marvel-title">Séries Marvel</h1>
-  <div class="series" id="marvel-series">
-    <!-- Série 1 -->
-    <div class="serie">
-      <h2>Demolidor: Renascido</h2>
-      <iframe src="https://www.youtube.com/embed/9KZyUQpihsE" allowfullscreen title="Demolidor Renascido na Disney+ em Março"></iframe>
-      <p>Demolidor: Renascido vai continuar os fatos de Demolidor na Netflix, novamente com Charlie Cox no papel do herói, além do retorno de outros personagens, como Rei do Crime, Karen Page e o Justiceiro</p>
-      <p>Data de lançamento: 04/03/2025</p>
-    </div>
+// 2. FUNÇÃO PARA CRIAR ELEMENTO DE MÍDIA
+function createMediaElement(movie) {
+  if (movie.embedUrl) {
+    return `<iframe src="${movie.embedUrl}" allowfullscreen></iframe>`;
+  } else if (movie.imageUrl) {
+    return `<img src="${movie.imageUrl}" alt="${movie.title}" class="movie-image">`;
+  }
+  return '<div class="no-media">Mídia não disponível</div>';
+}
 
-    <div class="serie">
-      <h2>Coração de Ferro</h2>
-      <iframe src="https://www.youtube.com/embed/OoKSKzqpPy4" allowfullscreen title="IronHeart em Junho no Disney+"></iframe>
-      <p>Após estrear no MCU em Wakanda Para Sempre, Riri Williams retorna neste ano com sua série própria em Coração de Ferro</p>
-      <p>Data de lançamento: 24/06/2025</p>
-    </div>
+// 3. CLASSE MOVIE MANAGER (ATUALIZADA)
+class MovieManager {
+  constructor() {
+    this.updateFrequency = 24 * 60 * 60 * 1000; // 24 horas
+    this.init();
+  }
 
-    <div class="serie">
-      <h2>Olhos de Wakanda</h2>
-      <img src="img/wakandaeyes.jpg" alt="Wakanda Eyes em Agosto na Disney+">
-      <p>A série do super-herói Magnum, chega em 2025. Ela será estrelada por Yahya Abdul-Mateen II no papel central.</p>
-      <p>Data de lançamento: 08/2025</p>
-    </div> 
+  init() {
+    this.renderMovies();
+    this.setupAutoUpdate();
+  }
 
-    <div class="serie">
-      <h2>Marvel Zombies</h2>
-      <iframe src="https://www.youtube.com/embed/9KZyUQpihsE" allowfullscreen title="Marvel Zombies uma serie em desenho, em Outubro no Disney+"></iframe>
-      <p>Marvel Zombies será uma mini animada em quatro episódios, situada em uma realidade alternativa do MCU. A série terá protagonistas como Guardião Vermelho, Feiticeira Escarlate, Shang-Chi, Kate Bishop e mais.</p>
-      <p>Data de lançamento: 03/10/2025</p>
-    </div>
+  getUpcomingMovies() {
+    const today = new Date();
+    return {
+      marvel: allMoviesDatabase.marvel.filter(m => this.isUpcoming(m.releaseDate, today)),
+      dc: allMoviesDatabase.dc.filter(m => this.isUpcoming(m.releaseDate, today))
+    };
+  }
 
-    <div class="serie">
-      <h2>Wonder Man</h2>
-      <img src="img/WONDERMAN.jpg" alt="WonderMan em Dezembro na Disney+">
-      <p>A série do super-herói Magnum, chega em 2025. Ela será estrelada por Yahya Abdul-Mateen II no papel central.</p>
-      <p>Data de lançamento: 12/2025</p>
-    </div>    
+  isUpcoming(releaseDate, today) {
+    const release = this.parseDate(releaseDate);
+    return release > today;
+  }
 
-    <div class="serie">
-      <h2>Visão</h2>
-      <img src="img/visao.jpg" alt="Visão">
-      <p>Spin-off de WandaVision acompanhando a jornada do androide Visão após os eventos da série.</p>
-      <p>Data de lançamento: 2026</p>
-    </div>
-  </div>
+  parseDate(dateStr) {
+    const [day, month, year] = dateStr.split('/').map(Number);
+    return new Date(year, month - 1, day || 1);
+  }
 
-  <h2 class="dc-titulo">Séries DC</h2>
-  <div class="series_dc" id="dc-series">
-    <div class="serie">
-      <h2>Pacificador - Temporada 2</h2>
-     <iframe src="https://www.youtube.com/embed/OJGFcVfct4Y" allowFullScreen alt="Pacificador, nova temporada em Agosto de 2025">
-      <p>Esquadrão militar formado por criaturas sobrenaturais em missões especiais.</p>
-      <p>Data de lançamento: 08/2025</p>
-    </div>
-
-    <div class="serie">
-      <h2>Supergirl: Mulher do Amanhã</h2>
-      <img src="img/supergirl.jpg" alt="Supergirl nos cinemas">
-      <p>Conta com a presença de Krypto o Supercão, Supergirl ajuda Ruthye a perseguir Krem pelas estrelas depois que o bandido mata o pai da garota</p>
-      <p>Data de lançamento: 26/06/2026</p>
-    </div>
-
-    <div class="serie">
-      <h2>Batman 2</h2>
-      <img src="img/Captura de tela 2024-08-13 085730.png" alt="Batman 2">
-      <p>Conta com a presença de Krypto o Supercão, Supergirl ajuda Ruthye a perseguir Krem pelas estrelas depois que o bandido mata o pai da garota</p>
-      <p>Data de lançamento: 26/06/2026</p>
-    </div>
+  renderMovies() {
+    const { marvel, dc } = this.getUpcomingMovies();
     
-    <div class="serie">
-      <h2>Cara de Barro</h2>
-      <img src="img/03035154871002.jpg" alt="Cara de Barro">
-      <p>É um personagem fictício, supervilão inimigo do Batman que teve seu corpo transformado em uma matéria argilosa. Existiram diversas identidades, com a mais conhecida sendo Basil Karlo</p>
-      <p>Data de lançamento: 26/09/2026</p>
-    </div>
+    document.getElementById('marvel-movies').innerHTML = this.generateMovieCards(marvel);
+    document.getElementById('dc-movies').innerHTML = this.generateMovieCards(dc);
+    
+    this.updateTimestamp();
+  }
 
-    <div class="serie">
-      <h2>Lanterns</h2>
-      <img src="img/lanterns.jpg" alt="Laterns em inglês, série que reunem todos lanternas verdes ganha lançamento em 2026">
-      <p>É um personagem fictício, supervilão inimigo do Batman que teve seu corpo transformado em uma matéria argilosa. Existiram diversas identidades, com a mais conhecida sendo Basil Karlo</p>
-      <p>Data de lançamento: em 2026</p>
-    </div>
-  </div>
+  generateMovieCards(movies) {
+    return movies.map(movie => `
+      <div class="movie-card">
+        <h2>${movie.title}</h2>
+        <div class="media-container">
+          ${createMediaElement(movie)}
+        </div>
+        <p class="description">${movie.description}</p>
+        <p class="release-date">Lançamento: ${movie.releaseDate}</p>
+      </div>
+    `).join('');
+  }
 
-  <div class="last-update">
-    Última atualização: <span id="update-time"></span>
-  </div>
+  setupAutoUpdate() {
+    setInterval(() => this.renderMovies(), this.updateFrequency);
+  }
 
-  <script src="scripts.js"></script>
-</body>
-</html>
+  updateTimestamp() {
+    document.getElementById('update-time').textContent = new Date().toLocaleString();
+  }
+}
+
+// 4. INICIALIZAÇÃO
+document.addEventListener('DOMContentLoaded', () => new MovieManager());
