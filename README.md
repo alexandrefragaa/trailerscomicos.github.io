@@ -1,8 +1,17 @@
-# Trailers Comicos 
+# Página - Trailers Comicos 
 
-## 🌟 Como Explorar o Site
-## 🎮 Controles Interativos
-## Filtros Mágicos no topo da página:
+# 📰 INTRODUÇÃO 
+
+### 📶 Filtros:
+### 💎 Recursos Especiais:
+### 👨🏻‍💻 Desenvolvido com:
+### 🌟 Contribuição:
+### 📚 Documentação:
+### 🎨 Design:
+### 💡 Ideias
+### 💬 Comentário:
+
+
 
 # 📶 Filtros : 
 
@@ -28,7 +37,7 @@ obs: só mostras os trailers, em breve será adicionado mais coisas
 
 
 
-# Desenvolvido com:
+# 👨🏻‍💻 Desenvolvido com:
 
 ## ❤️ Paixão por quadrinhos
 
@@ -45,8 +54,8 @@ obs: só mostras os trailers, em breve será adicionado mais coisas
 
 # **Leia abaixo se quiser ajudar com meus projetos**
 
-# 🛠️ Como Contribuir
-# 🔧 Melhorias no Código
+# 🌟 Como Contribuir
+### 🔧 Melhorias no Código
 ### Issues: Encontrou um bug ou tem uma sugestão? Abra uma issue descrevendo o problema ou a ideia.
 
 # Pull Requests: Siga os passos abaixo para contribuir com código:
