@@ -3,13 +3,13 @@ const allSeriesDatabase = {
   marvel: [
     {
       title: "Demolidor: Renascido",
-      embedUrl: "https://www.youtube.com/embed/9KZyUQpihsE",,
+      embedUrl: "https://www.youtube.com/embed/9KZyUQpihsE",
       description: "Demolidor: Renascido vai continuar os fatos de Demolidor na Netflix, novamente com Charlie Cox no papel do herói, além do retorno de outros personagens, como Rei do Crime, Karen Page e o Justiceiro",
       releaseDate: "04/03/2025"
     },
     {
       title: "Coração de Ferro",
-      embedUrl: "https://www.youtube.com/embed/OoKSKzqpPy4",,
+      embedUrl: "https://www.youtube.com/embed/OJGFcVfct4Y",
       description: "Após estrear no MCU em Wakanda Para Sempre, Riri Williams retorna neste ano com sua série própria em Coração de Ferro",
       releaseDate: "24/06/2025"
     },
@@ -17,10 +17,10 @@ const allSeriesDatabase = {
       title: "Olhos de Wakanda",
       imageUrl: "img/wakandaeyes.jpg",
       description: "A série do super-herói Magnum, chega em 2025. Ela será estrelada por Yahya Abdul-Mateen II no papel central.",
-      releaseDate: "01/08/2025" // Alterado para DD/MM/YYYY
+      releaseDate: "01/08/2025"
     },
     {
-      title: "Marvel Zombies",,
+      title: "Marvel Zombies",
       imageUrl: "img/marvel-zombies.jpg",
       description: "Marvel Zombies será uma mini animada em quatro episódios, situada em uma realidade alternativa do MCU. A série terá protagonistas como Guardião Vermelho, Feiticeira Escarlate, Shang-Chi, Kate Bishop e mais.",
       releaseDate: "03/10/2025"
@@ -29,21 +29,21 @@ const allSeriesDatabase = {
       title: "Wonder Man",
       imageUrl: "img/WONDERMAN.jpg",
       description: "A série do super-herói Magnum, chega em 2025. Ela será estrelada por Yahya Abdul-Mateen II no papel central.",
-      releaseDate: "01/12/2025" // Alterado para DD/MM/YYYY
+      releaseDate: "01/12/2025"
     },
     {
       title: "Visão",
       imageUrl: "img/visao.jpg",
       description: "Spin-off de WandaVision acompanhando a jornada do androide Visão após os eventos da série.",
-      releaseDate: "01/01/2026" // Alterado para DD/MM/YYYY
+      releaseDate: "01/01/2026"
     }
   ],
   dc: [
     {
       title: "Pacificador - Temporada 2",
-      embedUrl: "https://www.youtube.com/embed/OJGFcVfct4Y",,
+      embedUrl: "https://www.youtube.com/embed/OJGFcVfct4Y",
       description: "Esquadrão militar formado por criaturas sobrenaturais em missões especiais.",
-      releaseDate: "01/08/2025" // Alterado para DD/MM/YYYY
+      releaseDate: "01/08/2025"
     },
     {
       title: "Supergirl: Mulher do Amanhã",
@@ -67,7 +67,7 @@ const allSeriesDatabase = {
       title: "Lanterns",
       imageUrl: "img/lanterns.jpg",
       description: "Série que reúne todos os Lanternas Verdes.",
-      releaseDate: "01/01/2026" // Alterado para DD/MM/YYYY
+      releaseDate: "01/01/2026"
     }
   ]
 };
@@ -76,8 +76,10 @@ const allSeriesDatabase = {
 function createMediaElement(series) {
   if (series.embedUrl) {
     return `<iframe src="${series.embedUrl}" allowfullscreen title="${series.title}"></iframe>`;
+  } else if (series.imageUrl) {
+    return `<img src="${series.imageUrl}" alt="${series.title}">`;
   }
-  return `<img src="${series.imageUrl}" alt="${series.title}">`;
+  return '<div class="no-media">Sem mídia disponível</div>';
 }
 
 // Classe para gerenciar as séries
@@ -121,10 +123,10 @@ class SeriesManager {
   createSeriesCard(series) {
     return `
       <div class="serie">
-        <h2>${series.title}</h2>
         <div class="media-container">
           ${createMediaElement(series)}
         </div>
+        <h2>${series.title}</h2>
         <p>${series.description}</p>
         <p class="release-date">Data de lançamento: ${series.releaseDate}</p>
       </div>
@@ -141,7 +143,7 @@ class SeriesManager {
 }
 
 // Inicialização com tratamento de erros
-window.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
   try {
     new SeriesManager();
     console.log('Sistema iniciado com sucesso!');
