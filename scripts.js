@@ -1,281 +1,167 @@
-const allSeriesDatabase = {
-  marvel: [
-    {
-      title: "Demolidor: Renascido",
-      embedUrl: "https://www.youtube.com/embed/9KZyUQpihsE",
-      description: "Continuação da série do Demolidor com Charlie Cox",
-      streaming: "Disney+",
-      episodes: [
-        { date: "04/03/2025", type: "Estreia" },
-        { date: "11/03/2025", type: "Novo" },
-        { date: "18/03/2025", type: "Final" }
-      ],
-      activeUntil: "18/04/2025" // 30 dias após último episódio
-    },
-    {
-      title: "Coração de Ferro",
-      embedUrl: "https://www.youtube.com/embed/OoKSKzqpPy4",
-      description: "A jornada de Riri Williams como nova heroína tecnológica",
-      streaming: "Disney+",
-      episodes: [
-        { date: "24/06/2025", type: "Estreia" },
-        { date: "01/07/2025", type: "Novo" },
-        { date: "08/07/2025", type: "Final" }
-      ],
-      activeUntil: "08/08/2025"
-    },
-    {
-      title: "Olhos de Wakanda",
-      imageUrl: "img/wakandaeyes.jpg",
-      description: "Aventuras do super-herói wakandano",
-      streaming: "Disney+",
-      episodes: [
-        { date: "01/08/2025", type: "Estreia" },
-        { date: "08/08/2025", type: "Novo" }
-      ],
-      activeUntil: "08/09/2025"
-    },
-    {
-      title: "Marvel Zombies",
-      imageUrl: "img/legiao_fFpOw0dkBrZR.png",
-      description: "Universo alternativo zumbi do MCU",
-      streaming: "Disney+",
-      episodes: [
-        { date: "03/10/2025", type: "Estreia" },
-        { date: "10/10/2025", type: "Final" }
-      ],
-      activeUntil: "10/11/2025"
-    },
-    {
-      title: "Wonder Man",
-      imageUrl: "img/WONDERMAN.jpg",
-      description: "As aventuras do herói cinematográfico Simon Williams",
-      streaming: "Disney+",
-      episodes: [
-        { date: "01/12/2025", type: "Estreia" },
-        { date: "08/12/2025", type: "Novo" }
-      ],
-      activeUntil: "08/01/2026"
-    },
-    {
-      title: "Visão",
-      imageUrl: "img/visao.jpg",
-      description: "Jornada do androide após WandaVision",
-      streaming: "Disney+",
-      episodes: [
-        { date: "01/01/2026", type: "Estreia" },
-        { date: "08/01/2026", type: "Novo" }
-      ],
-      activeUntil: "08/02/2026"
-    }
-  ],
-  dc: [
-    {
-      title: "Pacificador - Temporada 2",
-      embedUrl: "https://www.youtube.com/embed/OJGFcVfct4Y",
-      description: "As novas missões do anti-herói interpretado por John Cena",
-      streaming: "Max",
-      episodes: [
-        { date: "01/08/2025", type: "Estreia" },
-        { date: "08/08/2025", type: "Novo" }
-      ],
-      activeUntil: "08/09/2025"
-    },
-    {
-      title: "Supergirl: Mulher do Amanhã",
-      imageUrl: "img/supergirl.jpg",
-      description: "Novas aventuras cósmicas da Supergirl",
-      streaming: "Max",
-      episodes: [
-        { date: "26/06/2026", type: "Estreia" },
-        { date: "03/07/2026", type: "Novo" }
-      ],
-      activeUntil: "03/08/2026"
-    },
-    {
-      title: "Batman 2",
-      imageUrl: "img/batman2.png", // Nome de arquivo corrigido
-      description: "Continuação da saga do Batman de Matt Reeves",
-      streaming: "Max",
-      episodes: [
-        { date: "26/06/2026", type: "Estreia" },
-        { date: "03/07/2026", type: "Novo" }
-      ],
-      activeUntil: "03/08/2026"
-    },
-    {
-      title: "Cara de Barro",
-      imageUrl: "img/03035154871002.jpg",
-      description: "A origem do vilão argiloso de Gotham",
-      streaming: "Max",
-      episodes: [
-        { date: "26/09/2026", type: "Estreia" },
-        { date: "03/10/2026", type: "Novo" }
-      ],
-      activeUntil: "03/11/2026"
-    },
-    {
-      title: "Lanterns",
-      imageUrl: "img/lanterns.jpg",
-      description: "A equipe dos Lanternas Verdes em ação",
-      streaming: "Max",
-      episodes: [
-        { date: "01/01/2026", type: "Estreia" },
-        { date: "08/01/2026", type: "Novo" }
-      ],
-      activeUntil: "08/02/2026"
-    }
-  ]
-};
-
 class SeriesManager {
-    constructor() {
-        this.updateInterval = 3600000; // 1 hora
-        this.currentFilters = {
-            platform: 'all',
-            status: 'active'
-        };
-        this.init();
-    }
+  constructor() {
+    this.currentFilter = 'current';
+    this.init();
+  }
 
-    init() {
-        this.setupFilters();
-        this.updateContent();
-        this.setupAutoUpdate();
-    }
+  init() {
+    this.setupFilters();
+    this.renderAllContent();
+    this.setupAutoUpdate();
+  }
 
-    setupFilters() {
-        document.getElementById('filter-platform').addEventListener('change', (e) => {
-            this.currentFilters.platform = e.target.value;
-            this.renderAllContent();
-        });
-
-        document.getElementById('filter-status').addEventListener('change', (e) => {
-            this.currentFilters.status = e.target.value;
-            this.renderAllContent();
-        });
-    }
-
-    parseDate(dateStr) {
-        const [day, month, year] = dateStr.split('/').map(Number);
-        return new Date(year, month - 1, day);
-    }
-
-    getSeriesStatus(series) {
-        const today = new Date();
-        const startDate = this.parseDate(series.episodes[0].date);
-        const endDate = this.parseDate(series.activeUntil);
-        const totalEpisodes = series.episodes.length;
-        const releasedEpisodes = series.episodes.filter(ep => 
-            this.parseDate(ep.date) <= today
-        ).length;
-
-        return {
-            isUpcoming: startDate > today,
-            isActive: today >= startDate && today <= endDate,
-            isEnded: today > endDate,
-            progress: (releasedEpisodes / totalEpisodes) * 100,
-            daysUntilStart: Math.ceil((startDate - today) / (1000 * 3600 * 24))
-        };
-    }
-
-    createSeriesCard(series) {
-        const status = this.getSeriesStatus(series);
-        
-        // Aplicar filtros
-        if(this.currentFilters.platform !== 'all' && series.streaming !== this.currentFilters.platform) return '';
-        if(this.currentFilters.status === 'active' && !status.isActive) return '';
-        if(this.currentFilters.status === 'upcoming' && !status.isUpcoming) return '';
-
-        return `
-            <div class="serie">
-                <div class="serie-header">
-                    <div class="platform-tag">${series.streaming}</div>
-                    ${status.isUpcoming ? `
-                        <div class="status-tag upcoming">
-                            Estreia em ${status.daysUntilStart} dias
-                        </div>
-                    ` : ''}
-                    ${status.isEnded ? `
-                        <div class="status-tag ended">
-                            Concluída
-                        </div>
-                    ` : ''}
-                </div>
-
-                <div class="media-container">
-                    ${series.embedUrl ? 
-                        `<iframe src="${series.embedUrl}" allowfullscreen title="${series.title}"></iframe>` : 
-                        `<img src="${series.imageUrl}" alt="${series.title}">`}
-                </div>
-
-                <div class="serie-info">
-                    <h2>${series.title}</h2>
-                    <p>${series.description}</p>
-                    
-                    <div class="progress-bar">
-                        <div class="progress" style="width: ${status.progress}%"></div>
-                    </div>
-
-                    <div class="episode-schedule">
-                        ${series.episodes.map((ep, index) => `
-                            <div class="episode ${this.parseDate(ep.date) <= new Date() ? 'released' : ''}">
-                                <span>Ep. ${index + 1} - ${ep.type}</span>
-                                <small>${this.parseDate(ep.date).toLocaleDateString('pt-BR')}</small>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-
-    updateContent() {
-        const today = new Date();
-        
-        // Atualização automática do catálogo
-        ['marvel', 'dc'].forEach(universe => {
-            allSeriesDatabase[universe] = allSeriesDatabase[universe]
-                .filter(series => this.parseDate(series.activeUntil) >= today)
-                .sort((a, b) => this.parseDate(a.episodes[0].date) - this.parseDate(b.episodes[0].date));
-        });
-
+  setupFilters() {
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        this.currentFilter = btn.dataset.filter;
         this.renderAllContent();
-    }
+      });
+    });
+  }
 
-    renderAllContent() {
-        const renderSection = (containerId, seriesList) => {
-            const container = document.getElementById(containerId);
-            container.innerHTML = seriesList
-                .map(series => this.createSeriesCard(series))
-                .join('') || `<p class="no-series">Nenhuma série disponível</p>`;
-        };
+  getSeriesStatus(series) {
+    const today = new Date();
+    const currentMonth = today.getMonth();
+    const currentYear = today.getFullYear();
+    
+    const episodeDates = series.episodes.map(ep => this.parseDate(ep.date));
+    const lastEpisodeDate = Math.max(...episodeDates);
+    const firstEpisodeDate = Math.min(...episodeDates);
 
-        renderSection('marvel-series', allSeriesDatabase.marvel);
-        renderSection('dc-series', allSeriesDatabase.dc);
-        this.updateTimestamp();
-    }
+    return {
+      isCurrent: new Date(firstEpisodeDate).getMonth() === currentMonth &&
+                 new Date(firstEpisodeDate).getFullYear() === currentYear,
+      isNextMonths: new Date(firstEpisodeDate) > today &&
+                   (new Date(firstEpisodeDate).getTime() - today) < 7776000000, // 3 meses
+      isNextYears: new Date(firstEpisodeDate).getFullYear() > currentYear
+    };
+  }
 
-    setupAutoUpdate() {
-        setInterval(() => {
-            this.updateContent();
-        }, this.updateInterval);
+  filterSeries(series) {
+    const status = this.getSeriesStatus(series);
+    
+    switch(this.currentFilter) {
+      case 'current':
+        return status.isCurrent;
+      case 'next-months':
+        return status.isNextMonths;
+      case 'next-years':
+        return status.isNextYears;
+      default:
+        return true;
     }
+  }
 
-    updateTimestamp() {
-        document.getElementById('update-time').textContent = 
-            `Atualizado em: ${new Date().toLocaleString('pt-BR')}`;
-    }
+  createSeriesCard(series, universe) {
+    const status = this.getSeriesStatus(series);
+    const platformClass = `platform-${series.streaming.toLowerCase().replace(/ /g, '-')}`;
+
+    return `
+      <div class="serie ${platformClass}">
+        <div class="serie-header">
+          <div class="platform-tag ${platformClass}">${series.streaming}</div>
+          <div class="status-indicator">
+            ${status.isCurrent ? '<span class="current-badge">No Ar</span>' : ''}
+            ${status.isNextMonths ? '<span class="upcoming-badge">Em Breve</span>' : ''}
+            ${status.isNextYears ? '<span class="future-badge">${new Date(series.episodes[0].date).getFullYear()}</span>' : ''}
+          </div>
+        </div>
+        
+        <div class="media-container">
+          ${series.embedUrl ? 
+            `<iframe src="${series.embedUrl}" allowfullscreen title="${series.title}"></iframe>` : 
+            `<img src="${series.imageUrl}" alt="${series.title}">`}
+        </div>
+
+        <div class="serie-info">
+          <h2>${series.title}</h2>
+          <div class="timeline">
+            ${series.episodes.map(ep => `
+              <div class="timeline-item ${this.parseDate(ep.date) <= Date.now() ? 'aired' : ''}">
+                <div class="timeline-point"></div>
+                <div class="timeline-content">
+                  <span>${ep.type}</span>
+                  <small>${this.parseDate(ep.date).toLocaleDateString('pt-BR')}</small>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  renderAllContent() {
+    const renderSection = (containerId, seriesList, universe) => {
+      const container = document.getElementById(containerId);
+      container.className = `series-grid universe-${universe}`;
+      container.innerHTML = seriesList
+        .filter(series => this.filterSeries(series))
+        .map(series => this.createSeriesCard(series, universe))
+        .join('') || `<p class="no-series">Nenhuma série encontrada</p>`;
+    };
+
+    renderSection('marvel-series', allSeriesDatabase.marvel, 'marvel');
+    renderSection('dc-series', allSeriesDatabase.dc, 'dc');
+    this.updateTimestamp();
+  }
+
+  // ... (mantenha os outros métodos)
 }
 
-// Inicialização
-document.addEventListener('DOMContentLoaded', () => {
-    try {
-        new SeriesManager();
-    } catch (error) {
-        console.error('Erro ao iniciar:', error);
-        document.querySelectorAll('.series-grid').forEach(container => {
-            container.innerHTML = '<p class="error">Erro ao carregar conteúdo</p>';
-        });
-    }
-});
+// CSS Adicional para Timeline
+.timeline {
+  position: relative;
+  margin: 20px 0;
+  padding-left: 20px;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 15px;
+  padding-left: 20px;
+}
+
+.timeline-point {
+  position: absolute;
+  left: -8px;
+  top: 5px;
+  width: 12px;
+  height: 12px;
+  background: #444;
+  border-radius: 50%;
+}
+
+.timeline-item.aired .timeline-point {
+  background: #e62429;
+}
+
+.timeline-content {
+  background: #2a2a2a;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.current-badge {
+  background: #00c853;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.8em;
+}
+
+.upcoming-badge {
+  background: #ffd600;
+  color: #000;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.8em;
+}
+
+.future-badge {
+  background: #0476f2;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.8em;
+}
