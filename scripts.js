@@ -141,7 +141,7 @@ const allSeriesDatabase = {
 
 class SeriesManager {
   constructor() {
-    this.currentFilter = 'all'; // Alterado para 'all' como padrão
+    this.currentFilter = 'all';
     this.selectedPlatform = 'all';
     this.init();
   }
@@ -162,9 +162,6 @@ class SeriesManager {
         this.renderAllContent();
       });
     });
-    
-    // Ativar o botão 'all' por padrão
-    document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
   }
 
   setupPlatformFilters() {
@@ -177,9 +174,6 @@ class SeriesManager {
         this.renderAllContent();
       });
     });
-    
-    // Ativar o badge 'all' por padrão
-    document.querySelector('.platform-badge[data-platform="all"]').classList.add('active');
   }
 
   parseDate(dateStr) {
@@ -209,12 +203,15 @@ class SeriesManager {
     const platformMatch = this.selectedPlatform === 'all' || 
                          series.streaming.toLowerCase() === this.selectedPlatform.toLowerCase();
 
-    switch(this.currentFilter) {
-      case 'current': return status.isCurrent && platformMatch;
-      case 'next-months': return status.isNextMonths && platformMatch;
-      case 'all': return platformMatch;
-      default: return platformMatch;
+    // Filtro por status
+    let statusMatch = true;
+    if (this.currentFilter === 'current') {
+      statusMatch = status.isCurrent;
+    } else if (this.currentFilter === 'next-months') {
+      statusMatch = status.isNextMonths;
     }
+
+    return platformMatch && statusMatch;
   }
 
   createSeriesCard(series) {
@@ -234,7 +231,7 @@ class SeriesManager {
         
         <div class="media-container">
           ${series.embedUrl ? 
-            `<iframe src="${series.embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>` : 
+            `<iframe src="${series.embedUrl}" frameborder="0" allowfullscreen></iframe>` : 
             `<img src="${series.imageUrl || 'https://via.placeholder.com/300x169?text=Poster+Indispon%C3%ADvel'}" alt="${series.title}">`}
         </div>
 
@@ -277,9 +274,8 @@ class SeriesManager {
   }
 
   updateTimestamp() {
-    const now = new Date();
     document.getElementById('update-time').textContent = 
-      now.toLocaleString('pt-BR', { 
+      new Date().toLocaleString('pt-BR', { 
         day: '2-digit', 
         month: '2-digit', 
         year: 'numeric',
@@ -290,12 +286,5 @@ class SeriesManager {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  try {
-    new SeriesManager();
-  } catch (error) {
-    console.error('Erro ao iniciar:', error);
-    document.querySelectorAll('.series-grid').forEach(container => {
-      container.innerHTML = '<p class="error">Erro ao carregar conteúdo. Recarregue a página.</p>';
-    });
-  }
+  new SeriesManager();
 });
