@@ -26,7 +26,7 @@ const allSeriesDatabase = {
     },
     {
       title: "Olhos de Wakanda",
-      imageUrl: "img/wakandaeyes.jpg",
+      imageUrl: "img\wakandaeyes.jpg",
       description: "Aventuras do super-herói wakandano",
       streaming: "Disney+",
       episodes: [
@@ -37,7 +37,7 @@ const allSeriesDatabase = {
     },
     {
       title: "Marvel Zombies",
-      imageUrl: "img/legiao_fFpOw0dkBrZR.png",
+      imageUrl: "img\legiao_fFpOw0dkBrZR.png",
       description: "Universo alternativo zumbi do MCU",
       streaming: "Disney+",
       episodes: [
