@@ -29,7 +29,7 @@ h1,h2,h3 {
 .marvel-title { 
   color: #e62429;
   text-shadow: 0 0 10px rgba(230, 36, 41, 0.5);
-    text-align: center;
+  text-align: center;
 }
 
 .dc-titulo { 
