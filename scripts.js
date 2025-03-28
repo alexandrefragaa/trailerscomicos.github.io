@@ -48,7 +48,7 @@ const allSeriesDatabase = {
     },
     {
       title: "Wonder Man",
-      imageUrl: "img/WONDERMAN.jpg",
+      imageUrl: "img/wonder.jpg",
       description: "As aventuras do herói cinematográfico Simon Williams",
       streaming: "Disney+",
       episodes: [
