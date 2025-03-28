@@ -37,7 +37,7 @@ const allSeriesDatabase = {
     },
     {
       title: "Marvel Zombies",
-      imageUrl: "img/legiao_fFpOw0dkBrZR.png",
+      imageUrl: "img/zombies.png",
       description: "Universo alternativo zumbi do MCU",
       streaming: "Disney+",
       episodes: [
@@ -94,7 +94,7 @@ const allSeriesDatabase = {
     },
     {
       title: "Batman 2",
-      imageUrl: "img/MV5BMTU2NzhiYWUtYThlZi00OWIyLTk3YWEtZjY3NmJjOTZiZDAyXkEyXkFqcGc@._V1_.jpg",
+      imageUrl: "img/3.png",
       description: "Continuação da saga do Batman de Matt Reeves",
       streaming: "Max",
       episodes: [
@@ -105,7 +105,7 @@ const allSeriesDatabase = {
     },
     {
       title: "Cara de Barro",
-      imageUrl: "img/03035154871002.jpg",
+      imageUrl: "img/2.jpg",
       description: "A origem do vilão argiloso de Gotham",
       streaming: "Max",
       episodes: [
