@@ -1,99 +1,70 @@
-# Página - Trailers Comicos 
+# Getting Started with Create React App
 
-# 📰 INTRODUÇÃO 
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-### 📶 Filtros:
-### 💎 Recursos Especiais:
-### 👨🏻‍💻 Desenvolvido com:
-### 🌟 Contribuição:
-### 📚 Documentação:
-### 🎨 Design:
-### 💡 Ideias
-### 💬 Comentário:
+## Available Scripts
 
+In the project directory, you can run:
 
+### `npm start`
 
-# 📶 Filtros : 
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-## Todos, mostram todos os lançamentos
-## Proximos Lançamento, mostra dos dos proximos meses, dias se for episódios ou a série toda
-## No Ar, mostra os episodios, série que está passando no mês 
-obs: só mostras os trailers, em breve será adicionado mais coisas
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-## Lançamentos do Mês: Revela apenas as séries que estreiam neste mês
+### `npm test`
 
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
+### `npm run build`
 
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-# 💎 Recursos Especiais :
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-## 📅 Datas de lançamento sempre atualizadas
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-## 🎥 Trailers embutidos para você assistir sem sair do site
+### `npm run eject`
 
-## 🌈 Código-colorido por Produtora/Editora das séries ou Streamings (vermelho Marvel/azul DC)
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
+## Learn More
 
-# 👨🏻‍💻 Desenvolvido com:
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-## ❤️ Paixão por quadrinhos
+To learn React, check out the [React documentation](https://reactjs.org/).
 
-## 🧠 Conhecimento nerd
+### Code Splitting
 
-## 🎨 Design heroico
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
+### Analyzing the Bundle Size
 
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
+### Making a Progressive Web App
 
-# Nota do Diretor: Este site é melhor visualizado com pipoca.
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
+### Advanced Configuration
 
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-# **Leia abaixo se quiser ajudar com meus projetos**
+### Deployment
 
-# 🌟 Como Contribuir
-### 🔧 Melhorias no Código
-### Issues: Encontrou um bug ou tem uma sugestão? Abra uma issue descrevendo o problema ou a ideia.
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-# Pull Requests: Siga os passos abaixo para contribuir com código:
+### `npm run build` fails to minify
 
-### Faça um fork do repositório.
-
-### Crie uma branch com sua feature (git checkout -b feature/nova-feature).
-
-### Commit suas mudanças (git commit -m "Adiciona nova feature").
-
-### Faça push para a branch (git push origin feature/nova-feature).
-
-### Abra um Pull Request explicando suas alterações.
-
-# 📚 Documentação
-## Ajude a melhorar a documentação, adicionando exemplos, corrigindo erros ou traduzindo para outras línguas.
-
-# 🎨 Design e Visualização
-## Se você tem habilidades em design, contribua com melhorias na interface gráfica ou visualizações mais intuitivas.
-
-# 💡 Ideias para Melhorar o Projeto
- ## Adicionar física estelar: Simulações mais realistas baseadas em astrofísica.
-
-### Interface interativa: Permitir que usuários "construam" estrelas arrastando elementos.
-
-### Exportar modelos: Salvar estrelas em formatos como .obj ou .stl para impressão 3D.
-
-### Integração com APIs astronômicas: Usar dados reais de estrelas (ex: NASA API).
-
-# 💬 Comentários e Feedback
-## Vou adorar ouvir seu feedback e seu comentário! 
-## Você pode:
-
-### Deixar um comentário nas issues ou discussions do repositório.
-
-### Se quiser enviar um email, so entra no meu perfil e vai estar ali, clique, copie e me envie o que precisar, o feedback, sugestões, dicas ou outras coisas, doações para o projeto
-
-### Contribuir com sugestões no nosso fórum da comunidade.
-
-# 📜 Licença
-## Este projeto está sob a licença MIT. Consulte o arquivo LICENSE para mais detalhes.
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
